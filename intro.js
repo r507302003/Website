@@ -6,7 +6,6 @@ function Intro(props) {
         greeting = <h2>Hello {props.user}</h2>
     }
     return <div>
-        <h1>Quiz-O-Matic</h1>
         {greeting}
         <p>This is the Quiz-o-matic app and it will help you hone your HTML, CSS, and JavaScript skills!</p>
     </div>;
