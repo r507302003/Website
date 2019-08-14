@@ -2,23 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function windSpeed() {
-      return 25*Math.random();
-}
+// Single JSX element
+const intro = <h1>Hello Website Development!</h1>;
 
-let intro = <h1>Hello Website Development!</h1>;
-let wind = windSpeed();
-if (wind > 12) {
-  intro = <h1>Go Sailing!</h1>
-}
-let report = <div>
-              <p>The windspeed is {wind.toFixed(1)}.</p>
-              </div>;
+// Array of JSX elements
+let content = [<p key="i1">This is a paragraph.</p>,
+  <p key="i2">This is another paragraph.</p>,
+  <h2 key="i3">I can put anything here.</h2>,
+  <footer key="i4"><p>Final paragraph.</p></footer>]
 
-ReactDOM.render(<section>
-  {intro}
-  {report}
-  </section>,
+ReactDOM.render(<section>{intro}{content}</section>,
   document.getElementById('root'));
 
 
