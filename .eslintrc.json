@@ -9,5 +9,7 @@
     "rules": {
         "semi": "error"
     },
-	"env": {"browser": true}
+	"env": {"browser": true},
+	"extends": ["eslint:recommended",
+		"plugin:react/recommended"]
 }
