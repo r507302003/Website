@@ -1,5 +1,14 @@
-main {
+body {
   max-width: 38rem;
   padding: 2rem;
   margin: auto;
+}
+
+table.myTable {
+    border-collapse: collapse;
+    border: solid 2px;
+}
+
+.myTable td, th {
+  border: solid blue 1px;
 }

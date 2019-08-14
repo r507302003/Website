@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import members from './students1.json'; // Practice data
 
-// Single JSX element
-const intro = <h1>Hello Website Development!</h1>;
+const intro = <h1>Our Coding Club!</h1>;
+// Take a look at what we imported
+console.log(members);
+// Extremely common pattern mapping array of info to array of JSX
+let rows = members.map(function(u){
+  return <tr key={u.netid}><td>{u.netid}</td><td>{u.firstName}</td><td>{u.lastName}</td></tr>;
+});
 
-// Array of JSX elements
-let content = [<p key="i1">This is a paragraph.</p>,
-  <p key="i2">This is another paragraph.</p>,
-  <h2 key="i3">I can put anything here.</h2>,
-  <footer key="i4"><p>Final paragraph.</p></footer>]
+let memberTable = <table className="myTable">
+  <thead><tr><th>NetId</th><th>First</th><th>Last</th></tr></thead>
+  <tbody>{rows}</tbody>
+</table>;
 
-ReactDOM.render(<section>{intro}{content}</section>,
+ReactDOM.render(<section>{intro}{memberTable}</section>,
   document.getElementById('root'));
 
 
