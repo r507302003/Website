@@ -3,12 +3,3 @@ body {
   padding: 2rem;
   margin: auto;
 }
-
-table.myTable {
-    border-collapse: collapse;
-    border: solid 2px;
-}
-
-.myTable td, th {
-  border: solid blue 1px;
-}
