@@ -19,6 +19,14 @@ function Question(props) {
     </div>;
 }
 
-export default Question;
+// Produces a quiz from a list of questions
+function Quiz(props) {
+    let allQs = props.questions.map(function(mChoice, i){
+        return <Question key={"q" + i} multiChoiceQ={mChoice} />
+    })
+    return <div><h1>Quiz-O-Matic</h1><h2>Quiz</h2>{allQs}</div>;
+}
+
+export {Question, Quiz};
 
 
