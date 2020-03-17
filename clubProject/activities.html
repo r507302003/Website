@@ -1,0 +1,55 @@
+<doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="club.css">
+    <script src="eventData.js" > </script>
+    <script src="activities.js"> </script>
+    <title>Succulent club</title>
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|IBM+Plex+Mono|Lacquer|Liu+Jian+Mao+Cao|Merriweather+Sans&display=swap" rel="stylesheet"> 
+</head>
+
+<body>
+<main class="format">
+    <nav>
+    <ul>
+        <li><a href="index.html">Home page</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="active"><a href="activities.html">Activities</a></li>
+        <li><a href="membership.html">Membership</a></li>
+        <li><a href="login.html">Login</a></li>
+    </ul>
+    </nav>
+<header>
+    <h1> Club Activities @ Succulent Club
+        <img src="images/activPhoto.jpg" alt="act photo" style="width:90%">
+    </h1>
+</header>
+    <section class="center">
+        <h2>Activities</h2>
+        <table id="eventsInfo" border="5" bordercolor ="#000066"  >
+            <thead>
+                <th>Event Name</th>
+                <th>Dates</th>
+                <th>Time</th>
+                <th>Location</th>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </section>
+
+<footer>
+    <p><small>&#127797 Copyright &copy; 2020, Tien-Hui Feng vd8386 - <a href="/tos">Terms of Service &#127803 </a> </small></p>
+</footer>
+</main>
+
+    <script language="javascript">
+        window.load(tInsert(events));
+    </script>
+
+</body>
+
+</html>
+</doctype>

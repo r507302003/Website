@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react": "^16.13.0"
+    "index.js": "0.0.3",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
   }
 }

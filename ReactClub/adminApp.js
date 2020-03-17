@@ -2,8 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import neptune from "./images/indexPhoto.jpg";
 
-
-class Home extends React.Component {
+class AdminApp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {role: "admin"}; // We will have "user" and "admin" roles too.
+    }
     // Renders component based on current state and props
     render() {
         return(
@@ -13,9 +16,9 @@ class Home extends React.Component {
                     <ul>
                         <li className="active"><a href="index.html">Home page</a></li>
                         <li><a href="about.html">About</a></li>
-                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="activities.html">Edit Activities</a></li>
                         <li><a href="membership.html">Membership</a></li>
-                        <li><a href="login.html">Login</a></li>
+                        <li><a href="logout.html">Logout</a></li>
                     </ul>
                 </nav>
             </div>
@@ -39,4 +42,4 @@ class Home extends React.Component {
         );
     }
 }
-export default Home;
+export default AdminApp;

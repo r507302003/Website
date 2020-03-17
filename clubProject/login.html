@@ -1,0 +1,47 @@
+<doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="club.css">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|IBM+Plex+Mono|Lacquer|Liu+Jian+Mao+Cao|Merriweather+Sans&display=swap" rel="stylesheet">
+</head>
+<body>  
+<main class="format">
+    <nav>
+        <ul>
+            <li><a href="index.html">Home page</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="activities.html">Activities</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li class="active"><a href="login.html">Login</a> 
+        </ul>
+    </nav>
+    <header>
+        <h1> Login </h1>
+    </header>
+    
+    <section class="center">
+    <form class="container">
+        <label for="mail">Email:</label>
+        <input type="email" id="email" name="email">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <input type="button" id="login" name="login" value="Login" onclick="loginInfo()">    
+    </form>
+    </section>
+    <footer>
+        <p><small> &#127797 Copyright &copy; 2020, Tien-Hui Feng vd8386 - <a href="/tos">Terms of Service &#127803 </a> </small></p>
+    </footer>
+</main>
+    <script type="text/javascript">
+        function loginInfo(){
+            console.log("Email: " + document.getElementById('email').value); 
+            console.log("Password: " + document.getElementById('password').value); 
+        }
+
+    </script>
+    
+    </body>
+</html>
+</doctype>

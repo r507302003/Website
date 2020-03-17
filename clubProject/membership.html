@@ -1,0 +1,63 @@
+<doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="membership.js"> </script>
+    <link rel="stylesheet" type="text/css" href="club.css">
+    <title>Membership</title>
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|IBM+Plex+Mono|Lacquer|Liu+Jian+Mao+Cao|Merriweather+Sans&display=swap" rel="stylesheet">
+</head>
+<body>     
+<main class="format">
+    <nav>
+        <ul>
+            <li><a href="index.html">Home page</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="activities.html">Activities</a></li>
+            <li class="active"><a href="membership.html">Membership</a></li>
+            <li><a href="login.html">Login</a> 
+        </ul>
+    </nav>
+    <header>
+        <h1> Membership </h1>
+    </header>
+    <section class="center">
+    <h2>Apply now</h2>
+        <section id="inputForm">
+        <form class="container">
+            <label for="name">Name:</label>
+            <input type="text" id="name">
+            <label for="mail">Email:</label>
+            <input type="email" id="email">
+            <label for="intoType">Flavor Species?</label>
+            <select id="intoType">
+                <option value="Aeonium">Aeonium</option>
+                <option value="Agave">Agave</option>
+                <option value="Aloe">Aloe</option>
+                <option value="Crassula">Crassula</option>
+                <option value="Echeveria">Echeveria</option>
+                <option value="kalanchoe">kalanchoe</option>
+                <option value="Haworthia">Haworthia</option>
+                <option value="Sedum">Sedum</option>
+                <option value="Sempervivum">Sempervivum</option>  
+            </select>
+            <label for="dialog">Comments:</label>
+            <textarea id="textbox"> </textarea>
+            <input type="button" id="signUp" value="Join Our Club" onclick= "inNout()" >  
+        </form>
+        </section>
+        <section id="ThanksDialog" border="2">
+            <section id="ShowDialog">
+                <h3>Thanks For Signing Up</h3>
+                <input type="button" id="close" value="Close" onclick="closed()" >
+            </section>
+        </section>
+    </section>
+    <footer>
+        <p><small> &#127797 Copyright &copy; 2020, Tien-Hui Feng vd8386 - <a href="/tos">Terms of Service &#127803 </a> </small></p>
+    </footer>
+    
+</main>
+    </body>
+</html>
+</doctype>
