@@ -6,14 +6,36 @@ import Member from './memberApp.js';
 import Admin from './adminApp.js'; 
 
 class App extends React.Component {
-    
+    constructor(props) {
+        super(props);
+        this.state = {
+        role: "guest" 
+        };
+    }
     
     // Renders component based on current state and props
     render() {
-        return (
-            <div className="App">
-                
-            </div> ); 
+        if(this.state.role == "admin"){
+            return (
+                <div className="App">
+                    <Admin />
+                </div> 
+            ); 
+        }
+        else if(this.state.role == "member"){
+            return (
+                <div className="App">
+                    <Member />
+                </div> 
+            ); 
+        }
+        else{
+            return(
+                <div className="App">
+                    <Guest />
+                </div>
+            );
+        }
                 }
             }
 ReactDOM.render(<App />, document.getElementById("root"));
