@@ -58,7 +58,7 @@ ReactDOM.render(<App />, document.getElementById("root"));
 ## Question 2 
 
 ### (b)
-![Router](images/1b.JPG)
+![Router](images/2b.JPG)
 
 #### index.js 
 ```javascript
