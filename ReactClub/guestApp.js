@@ -8,7 +8,9 @@ class GuestApp extends React.Component {
     constructor(props) {
         super();
         this.state = {
-        role: "guest" 
+            role: "guest",
+            memberOnly:false,
+            editActive:false
         };
     }
     // Renders component based on current state and props
@@ -21,3 +23,9 @@ class GuestApp extends React.Component {
     }
 }
 export default GuestApp;
+
+
+
+ 
+           /* <li><a href="#" onClick={() => this.notImplemented()}>Membership</a></li>
+            <li><a href="#" onClick={() => this.notImplemented()}>Login</a></li> */

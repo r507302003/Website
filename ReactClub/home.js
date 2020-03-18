@@ -28,19 +28,26 @@ class Home extends React.Component {
         return(
         <div className='format'>
             <div className='nav'>
-                <nav>
-                    <ul>
-                        <li className="active"><a href="/home">Home page</a></li>
-                        <li><a href="/about">About</a></li>
-                        <li><a href="#" onClick={() => this.notImplemented()}>Activities</a></li>
-                        <li><a href="#" onClick={() => this.notImplemented()}>Membership</a></li>
-                        <li><a href="#" onClick={() => this.notImplemented()}>Login</a></li>
-                    </ul>
-                </nav>
+            <nav>
+                <ul>
+                <li className="active"><a href="/home">Home page</a></li>
+                <li><a href="/about">About</a></li>
+                {this.props.editActive ?
+                    <li><a href="#" onClick={() => this.notImplemented()}>editActivities</a></li>
+                    :<li><a href="#" onClick={() => this.notImplemented()}>Activities</a></li> }
+                {this.props.memberOnly ?
+                    <li><a href="#" onClick={() => this.notImplemented()}>MemberOnly</a></li>
+                    :<li><a href="#" onClick={() => this.notImplemented()}>Membership</a></li> }
+                {this.props.memberOnly ? 
+                    <li><a href="#" onClick={() => this.notImplemented()}>Logout</a></li>
+                    :<li><a href="#" onClick={() => this.notImplemented()}>Login</a></li>
+                }
+                </ul>
+            </nav>
             </div>
             <div id='bodyText'>
                 <header id ='header'>
-                    <h1>Welcome to Succulent club</h1>
+                    <h1>Welcome to Succulent club {this.props.role}</h1>
                     <img src={neptune} />
                 </header>
                 <div className="center">

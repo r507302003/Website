@@ -111,12 +111,30 @@ notImplemented(e){
 ## Question 3
 
 ### (a)
-
-
+![memberonly](images/3a.JPG)
 
 
 ### (b)
+![editAct](images/3b.JPG)
 
+```Javascript
+<nav>
+    <ul>
+    <li className="active"><a href="/home">Home page</a></li>
+    <li><a href="/about">About</a></li>
+    {this.props.editActive ?
+        <li><a href="#" onClick={() => this.notImplemented()}>editActivities</a></li>
+        :<li><a href="#" onClick={() => this.notImplemented()}>Activities</a></li> }
+    {this.props.memberOnly ?
+        <li><a href="#" onClick={() => this.notImplemented()}>MemberOnly</a></li>
+        :<li><a href="#" onClick={() => this.notImplemented()}>Membership</a></li> }
+    {this.props.memberOnly ? 
+        <li><a href="#" onClick={() => this.notImplemented()}>Logout</a></li>
+        :<li><a href="#" onClick={() => this.notImplemented()}>Login</a></li>
+    }
+    </ul>
+</nav>
+```
 
 
 

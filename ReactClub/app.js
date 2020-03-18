@@ -10,7 +10,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        role: "guest" 
+        role: "member" 
         };
     }
     
@@ -43,12 +43,3 @@ class App extends React.Component {
 ReactDOM.render(<App />, document.getElementById("root"));
         
         
-        
-
-        
-/*
-    import {Link} from "react-router"; 
-    
-    <li><Link to={"/home"} activeClassName ={"active"}>Home</Link></li>
-                        <li><Link to={"/about"}>About</Link></li>
-*/

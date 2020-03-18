@@ -31,9 +31,12 @@ class About extends React.Component {
                     <ul>
                         <li><a href="/home">Home page</a></li>
                         <li className="active"><a href="/about">About</a></li>
-                        <li><a href="#" onClick={() => this.notImplemented('activities')}>Activities</a></li>
-                        <li><a href="#" onClick={() => this.notImplemented('membership')}>Membership</a></li>
-                        <li><a href="#" onClick={() => this.notImplemented('login')}>Login</a></li>
+                        {this.props.memberOnly ?
+                        <li><a href="#" onClick={() => this.notImplemented()}>MemberOnly</a></li>
+                        :null }
+                        {this.props.editActive ?
+                        <li><a href="#" onClick={() => this.notImplemented()}>editActivities</a></li>
+                        :null }
                     </ul>
                 </nav>
             </div>
