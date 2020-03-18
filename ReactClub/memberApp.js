@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import neptune from "./images/indexPhoto.jpg";
-
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'; 
 
 
 class MemberApp extends React.Component {
@@ -16,8 +16,8 @@ class MemberApp extends React.Component {
             <div className='nav'>
                 <nav>
                     <ul>
-                        <li className="active"><a href="index.html">Home page</a></li>
-                        <li><a href="about.html">About</a></li>
+                        <li><Link to={"/home"}>Home Page</Link></li>
+                        <li><Link to={"/about"}>About</Link></li>
                         <li><a href="activities.html">Activities</a></li>
                         <li><a href="memberonly.html">MemberOnly</a></li>
                         <li><a href="logout.html">Logout</a></li>

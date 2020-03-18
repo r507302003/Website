@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'; 
 import neptune from "./images/indexPhoto.jpg";
-import Home from "./index.js"; 
+import Index from "./index.js"; 
+
 class GuestApp extends React.Component {
     constructor(props) {
         super();
@@ -13,7 +15,7 @@ class GuestApp extends React.Component {
     render() {
         return(
         <div className="guest">
-            <Home />
+            <Index />
             </div> 
         );
     }

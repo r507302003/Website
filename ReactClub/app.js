@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'; 
 import './club.css';
 import Guest from './guestApp.js'; 
 import Member from './memberApp.js'; 
@@ -38,6 +39,7 @@ class App extends React.Component {
         }
                 }
             }
+
 ReactDOM.render(<App />, document.getElementById("root"));
         
         
@@ -47,6 +49,6 @@ ReactDOM.render(<App />, document.getElementById("root"));
 /*
     import {Link} from "react-router"; 
     
-    <li><Link to={"/home"} activeStyle={{color: "red"}}>Home</Link></li>
-    <li><Link to={"/user"} activeClassName ={"active"}>Home</Link></li>
+    <li><Link to={"/home"} activeClassName ={"active"}>Home</Link></li>
+                        <li><Link to={"/about"}>About</Link></li>
 */

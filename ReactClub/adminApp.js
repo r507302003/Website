@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import neptune from "./images/indexPhoto.jpg";
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'; 
 
 class AdminApp extends React.Component {
     constructor(props) {
@@ -14,11 +15,11 @@ class AdminApp extends React.Component {
             <div className='nav'>
                 <nav>
                     <ul>
-                        <li className="active"><a href="index.html">Home page</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="activities.html">Edit Activities</a></li>
-                        <li><a href="membership.html">Membership</a></li>
-                        <li><a href="logout.html">Logout</a></li>
+                        <li><Link to={"/home"} activeClassName ={"active"}>Home Page</Link></li>
+                        <li><Link to={"/about"} activeClassName ={"active"}>About</Link></li>
+                        <li><a href="#" onClick={notImplemented}>Edit Activities</a></li>
+                        <li><a href="#" onClick={notImplemented}>Membership</a></li>
+                        <li><a href="#" onClick={notImplemented}>Logout</a></li>
                     </ul>
                 </nav>
             </div>

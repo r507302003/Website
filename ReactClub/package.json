@@ -12,6 +12,9 @@
   "dependencies": {
     "index.js": "0.0.3",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "route": "^0.2.5"
   }
 }
