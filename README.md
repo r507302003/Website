@@ -140,6 +140,8 @@ notImplemented(e){
 
 ## Question 4
 
+### (a)
+![login](images/4a.JPG)
 
 ## Question 5
 

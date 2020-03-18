@@ -9,7 +9,8 @@ class MemberApp extends React.Component {
         super(props);
         this.state = {
             role: "member",
-            memberOnly: true, 
+            memberOnly: true,
+            editActive: false
         }; // We will have "user" and "admin" roles too.
     }
     // Renders component based on current state and props

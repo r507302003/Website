@@ -1,18 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import neptune from "./images/indexPhoto.jpg";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'; 
 import About from './about.js';
-import Login from './login.js';
+import Home from './home.js';
+import App from './app.js';
 
-    
-class Home extends React.Component {
+class Login extends React.Component {
     
     constructor(props) {
         super(props);
         this.state = {
-        show: "home" 
+            show: "login", 
+            email:'', 
+            password:''
         };
+        this.handleEmail = this.handleEmail.bind(this);
+        this.handlePassword = this.handlePassword.bind(this);
+    }
+    
+    handleEmail(e) {
+        this.setState({email: e.target.value});
+    }
+    handlePassword(e) {
+        this.setState({password: e.target.value});
     }
     
     notImplemented(e){
@@ -23,6 +33,17 @@ class Home extends React.Component {
         }); 
     }
     
+    loginInfo(){
+        if(this.state.email == 'admin@email.org'){
+           <App />
+           }
+        else if(this.state.email == 'member@email.org'){
+                
+            }
+        else {
+            alert('Account Not Exist');
+        }
+    }
     // Renders component based on current state and props
     render() {
         return(
@@ -47,15 +68,16 @@ class Home extends React.Component {
             </div>
             <div id='bodyText'>
                 <header id ='header'>
-                    <h1>Welcome to Succulent club {this.props.role}</h1>
-                    <img src={neptune} />
+                    <h1> Login </h1>
                 </header>
                 <div className="center">
-                    <h2>What is succulents?</h2>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Succulents, are plants with parts that are thickened, fleshy and engorged, usually to retain water in arid climates or soil conditions. <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;The word "succulent" comes from the Latin word sucus, meaning juice, or sap. Succulent plants may store water in various structures, such as leaves and stems. Some definitions also include roots, thus geophytes that survive unfavorable periods by dying back to underground storage organs may be regarded as succulents. 
-                    <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp; In horticultural use, the term "succulent" is sometimes used in a way which excludes plants that botanists would regard as succulents, such as cacti. Succulents are often grown as ornamental plants because of their striking and unusual appearance, as well as their ability to thrive with relatively minimal care. (cite from wiki)</p>
+                    <form className="container" onSubmit={this.loginInfo}>
+                        <label> Email: </label>
+                        <input type="email" email={this.props.email} onSubmit={this.handleEmail} />
+                        <label>Password:</label>
+                        <input type="password" password={this.props.password} onSubmit={this.handlePassword}/>
+                        <input type="submit" value="Submit" />
+                    </form>
                 </div>
                 <footer>
                 <p> &#127797; <small> Copyright &copy; 2020, Tien-Hui Feng vd8386 - <a href="/tos">Terms of Service</a> </small> &#127803;</p>
@@ -65,5 +87,14 @@ class Home extends React.Component {
         );
     }
 }
-export default Home;
+export default Login;
 
+        /*
+        <form className="container">
+                        <label htmlFor="mail">Email: </label>
+                        <input type="text" value={this.state.email} onChange={this.handleChange} />
+                        <label htmlFor="password">Password:</label>
+                        <input type="text" value={this.state.password} onChange={this.handleChange}/>
+                        <input type="button" id="login" name="login" value="Login" onClick={() => this.loginInfo(document.getElementById('email').value, document.getElementById('password').value)} />  
+                    </form>
+                    */

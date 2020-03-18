@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import neptune from "./images/aboutPhoto.jpg";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'; 
 import Home from './home.js'; 
-
+import Login from './login.js';
 
 class About extends React.Component {
     
@@ -17,9 +17,7 @@ class About extends React.Component {
     notImplemented(e){
         let bodyText = document.getElementById("bodyText"); 
         bodyText.innerHTML = `<h1> Not Implemented Yet </h1>`; 
-        this.setState({
-        show: e
-        }); 
+        this.setState({  show: e  }); 
     }
     
     // Renders component based on current state and props
@@ -31,12 +29,16 @@ class About extends React.Component {
                     <ul>
                         <li><a href="/home">Home page</a></li>
                         <li className="active"><a href="/about">About</a></li>
-                        {this.props.memberOnly ?
-                        <li><a href="#" onClick={() => this.notImplemented()}>MemberOnly</a></li>
-                        :null }
                         {this.props.editActive ?
-                        <li><a href="#" onClick={() => this.notImplemented()}>editActivities</a></li>
-                        :null }
+                        <li><a href="#" onClick={() => this.notImplemented('editActivities')}>editActivities</a></li>
+                        :<li><a href="#" onClick={() => this.notImplemented('Activities')}>Activities</a></li> }
+                        {this.props.memberOnly ?
+                        <li><a href="#" onClick={() => this.notImplemented('MemberOnly')}>MemberOnly</a></li>
+                        :<li><a href="#" onClick={() => this.notImplemented('Membership')}>Membership</a></li> }
+                        {this.props.memberOnly ? 
+                        <li><a href="#" onClick={() => this.notImplemented('Logout')}>Logout</a></li>
+                        :<li><a href="/login">Login</a></li>
+                        }
                     </ul>
                 </nav>
             </div>

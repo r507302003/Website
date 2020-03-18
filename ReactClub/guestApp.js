@@ -27,5 +27,3 @@ export default GuestApp;
 
 
  
-           /* <li><a href="#" onClick={() => this.notImplemented()}>Membership</a></li>
-            <li><a href="#" onClick={() => this.notImplemented()}>Login</a></li> */
