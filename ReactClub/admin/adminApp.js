@@ -59,6 +59,7 @@ class AdminApp extends React.Component {
         </ul>
         </nav>
             {contents}
+        
         <footer>
                 <p> &#127797; <small> Copyright &copy; 2020, Tien-Hui Feng vd8386 - <a href="/tos">Terms of Service</a> </small> &#127803;</p>
         </footer>

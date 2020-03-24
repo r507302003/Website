@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import './club.css';
-import Guest from './guestApp/guestApp.js'; 
-import Member from './memberApp/memberApp.js'; 
-import Admin from './adminApp/adminApp.js'; 
+import Guest from './guest/guestApp.js'; 
+import Member from './member/memberApp.js'; 
+import Admin from './admin/adminApp.js'; 
 
 class App extends React.Component {
     constructor(props) {
