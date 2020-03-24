@@ -1,20 +1,19 @@
-# Homework #6 Solution
+# Homework #7 Solution
 
 **Student Name**:  Tien-Hui Feng
-
 **NetID**: vd8386
 
 
 ## Question 1 
 
 ### (a) 
+![Dir](images/1a.JPG)
 ### (b)
-![home page](images/1b.JPG)
+![act form](images/1b.JPG)
 
 ### (c)
 ![Guest](images/1c_guest.JPG)
-![Member](images/1c_member.JPG)
-![Admin](images/1c_admin.JPG)
+
 
 ### (d)
 ```javascript

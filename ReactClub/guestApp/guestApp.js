@@ -1,24 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import neptune from "./images/indexPhoto.jpg";
 import Home from "./home.js"; 
 import About from "./about.js";
-import Login from "./login.js";
-import Logout from "./logout.js";
+import Login from "./login.js"; 
+import Activities from "./activities.js";
 
-class MemberApp extends React.Component {
+class GuestApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            role: "member",
-            name: this.props.name,
-            email:this.props.email,
+            role: "guest",
             show: 'home'
-        }; // We will have "user" and "admin" roles too.
-    }
-    
-    menuHandler(item) {
-        this.setState({show: item});
+        };
     }
     
     onChangeRole(newRole, newName){
@@ -27,6 +20,10 @@ class MemberApp extends React.Component {
             name: newName
         }); 
         this.props.changeRole(newRole, newName);
+    }
+    
+    menuHandler(item) {
+        this.setState({show: item});
     }
     
     // Renders component based on current state and props
@@ -39,21 +36,23 @@ class MemberApp extends React.Component {
             case 'about':
                 contents = <About />;
                 break;
-            case 'logout':
-                contents = <Logout name={this.state.name} email={this.state.email} changeRole={this.onChangeRole.bind(this)}/>;
+            case 'activities':
+                contents = <Activities />;
+                break;
+            case 'login':
+                contents = <Login changeRole={this.onChangeRole.bind(this)}/>;
                 break;
             default:
             contents = <h1>Not implemented yet.</h1>;
             }
         
-        return <div className='format'>
-        <nav className='nav'>
+        return <div className='format'><nav className='nav'>
         <ul>
             <li><a onClick={this.menuHandler.bind(this, "home")}>Home</a></li>
             <li><a onClick={this.menuHandler.bind(this, "about")}>About</a></li>
             <li><a onClick={this.menuHandler.bind(this, "activities")}>Activities</a></li>
-            <li><a onClick={this.menuHandler.bind(this, "memberonly")}>MemberOnly</a></li>
-            <li><a onClick={this.menuHandler.bind(this, "logout")}>Log Out</a></li>
+            <li><a onClick={this.menuHandler.bind(this, "membership")}>Membership</a></li>
+            <li><a onClick={this.menuHandler.bind(this, "login")}>Login</a></li>
         </ul>
         </nav>
             {contents}
@@ -64,4 +63,8 @@ class MemberApp extends React.Component {
         </div>;
         }
 }
-export default MemberApp;
+export default GuestApp;
+
+
+
+ 

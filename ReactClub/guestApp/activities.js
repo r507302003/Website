@@ -1,6 +1,6 @@
 import React from "react";
-import activities from "./activities.json";
-import neptune from "./images/activPhoto.jpg";
+import activities from "../activities.json";
+import neptune from "../images/activPhoto.jpg";
 
 function Activities(props) {
     let tableRows = activities.map(function(act, i) {

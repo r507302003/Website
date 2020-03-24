@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import './club.css';
-import Guest from './guestApp.js'; 
-import Member from './memberApp.js'; 
-import Admin from './adminApp.js'; 
+import Guest from './guestApp/guestApp.js'; 
+import Member from './memberApp/memberApp.js'; 
+import Admin from './adminApp/adminApp.js'; 
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        role: "guest",
+        role: "admin",
         name:''
         }
     }

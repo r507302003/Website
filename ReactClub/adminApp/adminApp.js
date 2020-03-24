@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import neptune from "./images/indexPhoto.jpg";
 import Home from "./home.js"; 
 import About from "./about.js";
-import Login from "./login.js";
 import Logout from "./logout.js";
+import EditAct from "./AdminActivity.js"; 
 
 class AdminApp extends React.Component {
     constructor(props) {
@@ -38,6 +37,9 @@ class AdminApp extends React.Component {
                 break;
             case 'about':
                 contents = <About />;
+                break;
+            case 'editactivities':
+                contents = <EditAct />;
                 break;
             case 'logout':
                 contents = <Logout name={this.state.name} email={this.state.email} changeRole={this.onChangeRole.bind(this)}/>;

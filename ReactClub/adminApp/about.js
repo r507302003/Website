@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import neptune from "./images/aboutPhoto.jpg";
+import neptune from "../images/aboutPhoto.jpg";
 
 class About extends React.Component {
     
