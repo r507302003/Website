@@ -1,26 +1,53 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import neptune from "./images/indexPhoto.jpg";
-import Home from "./home.js"; 
-import About from "./about.js";
-import Login from "./login.js"; 
+import './club.css';
+import Guest from './guestApp.js'; 
+import Member from './memberApp.js'; 
+import Admin from './adminApp.js'; 
 
-
-class Index extends React.Component {
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        role: "guest",
+        name:''
+        }
+    }
+    
+    onChangeRole(newRole, newName){
+        this.setState({
+            role: newRole,
+            name: newName
+        }); 
+    }
     
     // Renders component based on current state and props
-    render(){
-      return (
-    <Router>
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} memberOnly={this.props.memberOnly} editActive={this.props.editActive}/>
-            <Route path="/about" render={props =>(<About {...props} memberOnly={this.props.memberOnly} editActive={this.props.editActive}/>)}/>
-          <Home memberOnly={this.props.memberOnly} editActive={this.props.editActive}/>
-            
-        </Switch>
-    </Router> );
+    render() {
+        let contents;
+        switch (this.state.role) {
+            case 'guest':
+                contents = <Guest changeRole={this.onChangeRole.bind(this)} />;
+                break;
+                
+            case 'member':
+                contents = <Member changeRole={this.onChangeRole.bind(this)}/>;
+                break;
+                
+            case 'admin':
+                contents = <Admin name={this.state.name} changeRole={this.onChangeRole.bind(this)}/>;
+                break;
+                
+            default:
+                contents = <h1> Error 404</h1>;
         }
+    return(
+        <div>
+            {contents}
+        </div>
+    );
+    }
 }
-export default Index;
+
+ReactDOM.render(<App />, document.getElementById("root"));
+        
+        
