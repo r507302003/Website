@@ -82,9 +82,13 @@ setTimeout(cs351, 0); // hold msg then printout
 console.log('Is this the end?');
 ```
 Is this the start?
+
 When does this print?
+
 Is this the end?
+
 this is a msg from CS651
+
 This is a msg from CS351
 
 ### (d)
@@ -105,7 +109,9 @@ myPs = [myP1, myP2, myP3];
 racingPs = Promise.race(myPs);
 ```
 The code set the random wait time for three players.
+
 Promise.race will return the fastest result that pass back.
+
 By calling the winner(racingPs) after one of the player sent back result, we could fine winner
 
 
