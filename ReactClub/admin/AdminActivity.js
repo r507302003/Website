@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import activities from "../activities.json";
 
 function TableRows(props){
-    let tableRows = activities.map(function(act, i) {
+    let tableRows = activities.rowData.map(function(act, i) {
         let stDates = act.dates.join(", ");
             return (
             <tr key={i}>
-                <td><input type='button' value="Delete" /></td>
+                <td><input type='button' value="Delete" onClick={() => this.delRows(i)}/></td>
                 <td>&nbsp;{act.name}</td>
                 <td>&nbsp;{stDates}</td>
                 <td>&nbsp;{act.time}</td>
@@ -22,25 +22,27 @@ class AdminActivity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name:'',
-            dates:'',
-            time:'', 
-            location:''
+            name:activities.rowData.name,
+            dates:activities.dates,
+            time:activities.time, 
+            location:activities.location,
         };
     }
 
     addRows(){
-        let newRows = this.state.activities;
-        activities.push('new act');
-        this.setState({
-            name: this.state.name,
-            dates: this.state.dates,
-            time: this.state.time,
-            location: this.state.location,
-                      })
+        var newRow = JSON.parse(activities); newRow[rowData].push({"name":"1","location":this.state.location,"time":this.state.time,"dates":this.state.dates });
+        activities = JSON.stringify(newRow);
     }
     
-    
+    delRows(i){
+        let upRows = activities.rowData.filter(function(act, i){
+            if (index === i)
+                return false; 
+            else
+                return true; 
+        })
+        activities.rowData = JSON.stringify(upRows);
+    }
     
     render(){
     return (
@@ -62,7 +64,7 @@ class AdminActivity extends React.Component {
                 
                 <label>Location:</label>
                     <input type="text"   onChange={(e) => this.setState({ location: e.target.value })} />
-                <input type="button" value="Add" onClick={()=>this.addRows()} />
+                <input type="button" value="Add" onClick={()=>this.addRows} />
             </form>    
         </section>
         <section className="center">

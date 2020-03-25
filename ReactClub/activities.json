@@ -1,4 +1,4 @@
-[
+{"rowData":[
     { 'name': "Club Meeting Wendsday", 
       'location': "  room 103 ",
       'time': " 2:00 - 3:00pm ", 
@@ -13,4 +13,4 @@
       'location': "  playground ",
       'time': " 9:00am - 5:00pm (launch included) ", 
      'dates': [" Feb 23th ", " March 8th ", " March 22th ", " April 5th ", " April 19th ", " May 3rd ", " May 17th ", " May 31th ", " June 14th ", " June 28 "]
-    }]
+    }]}

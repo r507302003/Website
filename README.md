@@ -14,15 +14,59 @@
 ### (c)
 
 ### (d)
-
+```javascript 
+addRows(){
+    var newRow = JSON.parse(activities); newRow[rowData].push({"name":"1","location":this.state.location,"time":this.state.time,"dates":this.state.dates });
+    activities = JSON.stringify(newRow);
+}
+```
 ### (e)
+```javascript 
+<form className="form">
+    <label> Name: </label>
+        <input type="text" id='name'   onChange={(e) => this.setState({ name: e.target.value })} />
+
+    <label>Dates:</label>
+        <input type="text"   onChange={(e) => this.setState({ dates: e.target.value })} />
+
+    <label>Time:</label>
+        <input type="text"   onChange={(e) => this.setState({ time: e.target.value })} />
+
+    <label>Location:</label>
+        <input type="text"   onChange={(e) => this.setState({ location: e.target.value })} />
+    <input type="button" value="Add" onClick={()=>this.addRows} />
+```
+
+### (f)
+```javascript 
+onChange={(e) => this.setState({ dates: e.target.value })
+```
 
 ## Question 2 
 
 ### (a)
 
-### (b)
 
+### (b)
+```javascript 
+
+delRows(i){
+    let upRows = activities.rowData.filter(function(act, i){
+        if (index === i)
+            return false; 
+        else
+            return true; 
+    })
+    activities.rowData = JSON.stringify(upRows);
+}
+
+```
+
+### (c)
+
+```javascript 
+<td><input type='button' value="Delete" onClick={() => this.delRows(i)}/></td>
+```
 
 ## Question 3
 
