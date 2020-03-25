@@ -112,7 +112,15 @@ The code set the random wait time for three players.
 
 Promise.race will return the fastest result that pass back.
 
-By calling the winner(racingPs) after one of the player sent back result, we could fine winner
+```javascript 
+setTimeout(function(){
+    myPs = Promise.all([myP1,myP2,myP3]);  //to get result from myP1,2,3
+    racingPs = myPs.then(function(msg) { Promise.race(msg)}); //call race after myPs result
+    winner(racingPs); //show the winner
+}, 1000);
+
+```
+
 
 
 
