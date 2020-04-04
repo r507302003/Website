@@ -1,51 +1,39 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import activities from "../activities.json";
-
-function TableRows(props){
-    let tableRows = activities.rowData.map(function(act, i) {
-        let stDates = act.dates.join(", ");
-            return (
-            <tr key={i}>
-                <td><input type='button' value="Delete" onClick={() => this.delRows(i)}/></td>
-                <td>&nbsp;{act.name}</td>
-                <td>&nbsp;{stDates}</td>
-                <td>&nbsp;{act.time}</td>
-                <td>&nbsp;{act.location}</td>
-            </tr> );
-    });
-    return tableRows;
-}
+import ActivityTable from "./activityTable.js";
 
 
 class AdminActivity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name:activities.rowData.name,
-            dates:activities.dates,
-            time:activities.time, 
-            location:activities.location,
+            activities: activities,
+            addName: "",
+            addDate: "", 
+            addTime: "",
+            addLocation: ""
         };
     }
 
-    addRows(){
-        var newRow = JSON.parse(activities); newRow[rowData].push({"name":"1","location":this.state.location,"time":this.state.time,"dates":this.state.dates });
-        activities = JSON.stringify(newRow);
+    addActivity() {
+        // We need to create a new object with new sub-array
+        let act = {
+            name: this.state.addName,
+            dates: this.state.addDate,
+            time: this.state.addTime,
+            location: this.state.addLocation};
+        this.setState({activities: this.state.activities.concat(act)});
     }
     
-    delRows(i){
-        let upRows = activities.rowData.filter(function(act, i){
-            if (index === i)
-                return false; 
-            else
-                return true; 
-        })
-        activities.rowData = JSON.stringify(upRows);
+    delActivity(index) {
+        let updateActivities = this.state.activities.filter((act, i) => index !== i);
+        this.setState({activities: updateActivities});
     }
     
     render(){
-    return (
+    
+        return (
         <main>
         <header>
             <h1>Club Activities @ Succulent Club</h1>
@@ -54,33 +42,22 @@ class AdminActivity extends React.Component {
             <h2><small>Add Activity</small></h2>
             <form className="form">
                 <label> Name: </label>
-                    <input type="text" id='name'   onChange={(e) => this.setState({ name: e.target.value })} />
+                    <input type="text" id='name'   onChange={(e) => this.setState({ addName: e.target.value })} />
     
                 <label>Dates:</label>
-                    <input type="text"   onChange={(e) => this.setState({ dates: e.target.value })} />
+                    <input type="text"   onChange={(e) => this.setState({ addDate: e.target.value })} />
     
                 <label>Time:</label>
-                    <input type="text"   onChange={(e) => this.setState({ time: e.target.value })} />
+                    <input type="text"   onChange={(e) => this.setState({ addTime: e.target.value })} />
                 
                 <label>Location:</label>
-                    <input type="text"   onChange={(e) => this.setState({ location: e.target.value })} />
-                <input type="button" value="Add" onClick={()=>this.addRows} />
+                    <input type="text"   onChange={(e) => this.setState({ addLocation: e.target.value })} />
+                <input type="button" value="Add" onClick = {this.addActivity.bind(this)} />
             </form>    
         </section>
         <section className="center">
             <h2>Activities</h2>
-            <table id="eventsInfo" border="5" bordercolor ="#000066">
-                <thead>
-                <tr>
-                    <td>Delete</td>
-                    <td>&nbsp;Event Name</td>
-                    <td>&nbsp;Dates</td>
-                    <td>&nbsp;Time</td>
-                    <td>&nbsp;Location</td>
-                </tr>
-                </thead>
-                <tbody id="tbody"><TableRows /></tbody>
-            </table>
+            <ActivityTable activities={this.state.activities} del={this.delActivity.bind(this)} />
         </section>
         </main>
         ); 

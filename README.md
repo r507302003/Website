@@ -24,22 +24,26 @@ addRows(){
 ```javascript 
 <form className="form">
     <label> Name: </label>
-        <input type="text" id='name'   onChange={(e) => this.setState({ name: e.target.value })} />
+        <input type="text" id='name'   onChange={(e) => this.setState({ addName: e.target.value })} />
 
     <label>Dates:</label>
-        <input type="text"   onChange={(e) => this.setState({ dates: e.target.value })} />
+        <input type="text"   onChange={(e) => this.setState({ addDates: e.target.value })} />
 
     <label>Time:</label>
-        <input type="text"   onChange={(e) => this.setState({ time: e.target.value })} />
+        <input type="text"   onChange={(e) => this.setState({ addTime: e.target.value })} />
 
     <label>Location:</label>
-        <input type="text"   onChange={(e) => this.setState({ location: e.target.value })} />
+        <input type="text"   onChange={(e) => this.setState({ addLocation: e.target.value })} />
     <input type="button" value="Add" onClick={()=>this.addRows} />
+</form>    
 ```
 
 ### (f)
 ```javascript 
-onChange={(e) => this.setState({ dates: e.target.value })
+onChange={(e) => this.setState({ addName: e.target.value })
+onChange={(e) => this.setState({ addDates: e.target.value })
+onChange={(e) => this.setState({ addTime: e.target.value })
+onChange={(e) => this.setState({ addLocation: e.target.value })
 ```
 
 ## Question 2 
