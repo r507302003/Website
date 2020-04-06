@@ -1,4 +1,4 @@
-# Homework #7 Solution
+# Homework #8 Solution
 
 **Student Name**:  Tien-Hui Feng
 **NetID**: vd8386
@@ -6,45 +6,51 @@
 
 ## Question 1 
 
-### (a) 
-![Dir](images/1a.JPG)
-### (b)
-![act form](images/1b.JPG)
+### (a)
+### What HTTP Method is used in the request?
+    GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE
 
-### (c)
+### What is the response code and what does it mean?
+    HTTP response code indicates what is about to happen.
+    1. 200 means OK
+    2. 301 means Moved Permanently 
+    3. 302 means Found (Moved Temporarily)
+    4. 401 means Unauthorized
+    5. 403 means Forbidden
+    6. 404 means Not Found (the error code)
+    7. 410 means Gone
+    8. 500 means Internal Server Error
+    9. 503 means Service Unavailable 
+    
+### What version of HTTP is being used?
+    HTTP/1.1
+### (b) List the request headers and their values here (copy and paste)
+    * Controls: Host, Cache-Control, Expect, …
+    * Content Negotiation: Accept, Accept-Charset, Accept-Encoding, Accept-Language
+    * Authentication Credentials: Authorization, Proxy-Authorization
+    * Request Context: From, Referer, User-Agent
 
-### (d)
-```javascript 
-addRows(){
-    var newRow = JSON.parse(activities); newRow[rowData].push({"name":"1","location":this.state.location,"time":this.state.time,"dates":this.state.dates });
-    activities = JSON.stringify(newRow);
-}
-```
-### (e)
-```javascript 
-<form className="form">
-    <label> Name: </label>
-        <input type="text" id='name'   onChange={(e) => this.setState({ addName: e.target.value })} />
+### (c) List the response headers and their values here (copy and paste)
+    * Control Data: Age, Cache-Control, Expires, Date, Location,…
+    * Validator Fields: Etag, Last-Modified
+    * Authentication Challenges: WWW-Authenticate, Proxy-Authenticate
+    * Response Context: Accept-Ranges, Allow, Server
+### (d) What server is BlackBoard based on?
+    openresty/1.9.3.1
 
-    <label>Dates:</label>
-        <input type="text"   onChange={(e) => this.setState({ addDates: e.target.value })} />
+Are any cookies set? If so what are they.
 
-    <label>Time:</label>
-        <input type="text"   onChange={(e) => this.setState({ addTime: e.target.value })} />
+### (e) URLs
+For the following URLs identify the protocol, domain, port, path, query and fragment portions (if any):
 
-    <label>Location:</label>
-        <input type="text"   onChange={(e) => this.setState({ addLocation: e.target.value })} />
-    <input type="button" value="Add" onClick={()=>this.addRows} />
-</form>    
-```
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types#Comments
 
-### (f)
-```javascript 
-onChange={(e) => this.setState({ addName: e.target.value })
-onChange={(e) => this.setState({ addDates: e.target.value })
-onChange={(e) => this.setState({ addTime: e.target.value })
-onChange={(e) => this.setState({ addLocation: e.target.value })
-```
+https://www.google.com/search?q=gaia+mission&rlz=1CYPO_enUS751
+
+http://127.0.0.2:8282/static/index.html
+
+
+
 
 ## Question 2 
 
