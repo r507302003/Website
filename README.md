@@ -93,9 +93,40 @@ Set-Cookie: AWSELBCORS=D3570BC914533D9ACC5FBEA2A258730F699E691A0AC95F4514958C9FF
 ## Question 4 JSON Server Post
 
 ### (a) Add Activity 
+```javascript 
+app.use(bodyParser());
 
+app.post('/activities', express.json(), function(req, res) {
+    console.log(`path /activities received: ${JSON.stringify(req.body)}`);
+    activities.push(req.body);
+    res.json(activities);
+});
+
+```
 ### (b) Test with Requests
+```javascript 
+// Testing a JSON post interface
+const request = require('request');
 
+const postInfo = {
+    url: 'http://127.8.88.5:8386/activities',
+    method: "POST",
+    json: true,
+    body: {
+        name: "new Act", 
+        location: "room 214", 
+        time: "2:00 - 3:00", 
+        dates:"May 3"}
+};
+
+console.log("POST JSON test");
+request(postInfo, function(error, res, body) {
+    console.log(error);
+    console.log(body);
+});
+
+```
+![addactivity](images/4b.JPG)
 
 ### (c) Security: Input Limits
 

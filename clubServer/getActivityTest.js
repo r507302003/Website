@@ -2,7 +2,7 @@ var rp = require('request-promise');
 
 
 var options = {
-    url: 'http://127.8.88.5:8386',
+    url: 'http://127.8.88.5:8386/',
     qs: {
         access_token: 'xxxxx xxxxx' // -> uri + '?access_token=xxxxx%20xxxxx'
     },
@@ -13,8 +13,8 @@ var options = {
 };
 
 rp(options)
-    .then(function (repos) {
-        console.log(repos);
+    .then(function (body) {
+        console.log(body); 
     })
     .catch(function (err) {
         // API call failed...

@@ -14,8 +14,8 @@ app.post('/addThing', express.json(), function(req, res) {
     res.json(windthings);
 });
 
-host = '127.0.0.1';
-port = '5555';
+var host = '127.0.0.1';
+var port = '5555';
 
 app.listen(port, host, function () {
 console.log(`Basic JSON app listening on IPv4: ${host}:${port}`);
