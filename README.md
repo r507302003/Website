@@ -72,111 +72,41 @@ Set-Cookie: AWSELBCORS=D3570BC914533D9ACC5FBEA2A258730F699E691A0AC95F4514958C9FF
 ## Question 2 Simple Servers
 
 ### (a) Simple Date Server
-
+![date](images/2a.JPG)
 
 ### (b) Simple Name/NetID Server
-
+![netid](images/2b.JPG)
 
 ### (c) Combine services
+![combine](images/2c.JPG)
 
 
-## Question 3
+## Question 3 JSON Server Get
 
-### (a)
-![internet](images/3a.JPG)
+### (a) Get Activities
 
 
-### (b)
-![made](images/3b.JPG)
-
-### (b)
-Private network	
-Used for local communications within a private network.
-
-### (c)
-stackoverflow.com
-[ '151.101.193.69', '151.101.65.69', '151.101.129.69', '151.101.1.69' ]
-
-### (d)
-![address](images/3c.JPG)
-## Question 4
-
-### (a) this 
-1. point to an instance of an object from within its own class definition
-2. keeps track of execution context
-
-### (b)
-```javascript
-myObj1 = {course: "WebDev", students: 36};
-myObj2 = {course: "WebSys", students: 31};
-var myFunction = function () {
-  console.log(this); function {}
-};
-
-myFunction(); // this?  function{}
-myObj1.method1 = myFunction;
-myObj1.method1(); // this?  function{}
-func2 = myObj1.method1.bind(myObj2);
-func2(); // this?  function{}
-
-```
-
-### (c)
-
-``` javascript 
-function cs351() {
-  console.log('This is a msg from CS351');
-}
-function cs651() {
-  console.log('this is a msg from CS651');
-}
-
-console.log('Is this the start?');
-setTimeout(cs651); // hold msg then printout
-console.log('When does this print?');
-setTimeout(cs351, 0); // hold msg then printout
-console.log('Is this the end?');
-```
-Is this the start?
-
-When does this print?
-
-Is this the end?
-
-this is a msg from CS651
-
-This is a msg from CS351
-
-### (d)
-``` javascript
-function winner(name) {
-  console.log(`The winner is ${name}`);
-}
-myP1 = new Promise(function(resolve, reject){
-    setTimeout(()=>resolve("P1"), 1000*Math.random());
-});
-myP2 = new Promise(function(resolve, reject){
-    setTimeout(()=>resolve("P2"), 1000*Math.random());
-});
-myP3 = new Promise(function(resolve, reject){
-    setTimeout(()=>resolve("P3"), 1000*Math.random());
-});
-myPs = [myP1, myP2, myP3];
-racingPs = Promise.race(myPs);
-```
-The code set the random wait time for three players.
-
-Promise.race will return the fastest result that pass back.
-
-```javascript 
-setTimeout(function(){
-    myPs = Promise.all([myP1,myP2,myP3]);  //to get result from myP1,2,3
-    racingPs = myPs.then(function(msg) { Promise.race(msg)}); //call race after myPs result
-    winner(racingPs); //show the winner
-}, 1000);
-
-```
+### (b)Test via Requests
 
 
 
+## Question 4 JSON Server Post
+
+### (a) Add Activity 
+
+### (b) Test with Requests
+
+
+### (c) Security: Input Limits
+
+
+### (d) Test Good and Bad in order
+
+
+## Question 5. Delete Activity
+
+
+### (a) Delete Activity
+
+### (b) Test with Requests
 
