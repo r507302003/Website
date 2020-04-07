@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Simple Form to Try with Express</title>
+    <link rel="stylesheet" href="formStyle.css">
+</head>
+
+<body>
+    <h2>Message in a Bottle Delivery Service</h2>
+    <form action="/simple_form_handling" method="get">
+        <fieldset>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="user_name">
+            </div>
+            <div>
+                <label for="mail">E-mail:</label>
+                <input type="email" id="mail" name="user_mail">
+            </div>
+            <div>
+                <label for="msg">Message:</label>
+                <textarea id="msg" name="user_message"></textarea>
+            </div>
+            <div><button type="submit">Send your message</button></div>
+        </fieldset>
+    </form>
+</body>
+
+</html>

@@ -84,10 +84,10 @@ Set-Cookie: AWSELBCORS=D3570BC914533D9ACC5FBEA2A258730F699E691A0AC95F4514958C9FF
 ## Question 3 JSON Server Get
 
 ### (a) Get Activities
-
+![JSONfromFile](images/3a.JPG)
 
 ### (b)Test via Requests
-
+![getJSONfromWeb](images/3b.JPG)
 
 
 ## Question 4 JSON Server Post

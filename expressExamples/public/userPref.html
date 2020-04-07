@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Preferences to Track with Cookie</title>
+    <link rel="stylesheet" href="pure-min.css">
+    <style>
+        * {
+            box-sizing: border-box
+        }
+        
+        body {
+            margin: 2em;
+        }
+        
+        h2 {
+            text-align: center;
+        }
+        
+        fieldset {
+            width: 400px;
+        }
+        
+        .formRow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        
+        label {
+            flex-grow: 1;
+            flex-shrink 1;
+            flex-basis: 5em;
+            margin-top: 1em;
+            margin-right: 0;
+        }
+        
+        input,
+        select,
+        button {
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: 100px;
+            margin-top: 1em;
+            margin-right: 1em;
+        }
+        
+        button {
+            max-width: 200px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h2>User Name and Preferences</h2>
+    <form action="/setUserPrefs" method="post">
+        <fieldset>
+            <div class="formRow">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="user_name">
+            </div>
+            <div class="formRow">
+                <label for="favColor">Favorite Background Color</label>
+                <input type="color" id="favColor" name="favColor">
+            </div>
+
+            <div class="formRow">
+                <label for="typeSize">Regular Font Size</label>
+                <input type="number" id="typeSize" name="typeSize">
+            </div>
+
+            <div class="formRow">
+                <label for="fontStyle">Regular Font Style</label>
+                <select name="fontStyle" id="fontStyle">
+                <option value="serif">Serif</option>
+                <option value="sans-serif">Sans-Serif</option>
+            </select>
+            </div>
+            <div class="formRow">
+                <button type="submit">Set Your Preferences</button>
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+</html>
