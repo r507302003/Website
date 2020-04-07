@@ -49,54 +49,36 @@ Set-Cookie: AWSELBCORS=D3570BC914533D9ACC5FBEA2A258730F699E691A0AC95F4514958C9FF
 
 #### https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types#Comments
 * protocol: "https:"
+* domain: developer.mozilla.org
 * port: 443
 * path: "/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types"
-* query: 
-* fragment portions: 
+* fragment portions: Comments
 
 
 #### https://www.google.com/search?q=gaia+mission&rlz=1CYPO_enUS751
 * protocol: "https:"
+* domain: www.google.com
 * port: 443
 * path: "/search?q=gaia+mission&rlz=1CYPO_enUS751"
-* query: q=gaia+mission&rlz=1CYPO_enUS751
-* fragment portions: 
+* query: ?q=gaia+mission&rlz=1CYPO_enUS751 
 
 #### http://127.0.0.2:8282/static/index.html
 * Error: connect ECONNREFUSED 127.0.0.2:8282 
+* domain: 127.0.0.2
 * port: 8282
 * path: "static/index.html"
-* query: 
-* fragment portions: 
 
 
+## Question 2 Simple Servers
+
+### (a) Simple Date Server
 
 
-## Question 2 
-
-### (a)
+### (b) Simple Name/NetID Server
 
 
-### (b)
-```javascript 
+### (c) Combine services
 
-delRows(i){
-    let upRows = activities.rowData.filter(function(act, i){
-        if (index === i)
-            return false; 
-        else
-            return true; 
-    })
-    activities.rowData = JSON.stringify(upRows);
-}
-
-```
-
-### (c)
-
-```javascript 
-<td><input type='button' value="Delete" onClick={() => this.delRows(i)}/></td>
-```
 
 ## Question 3
 
