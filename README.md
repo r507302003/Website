@@ -129,7 +129,17 @@ request(postInfo, function(error, res, body) {
 ![addactivity](images/4b.JPG)
 
 ### (c) Security: Input Limits
+```javascript 
+app.use(activityErrors);
+function activityErrors(err, req, res, next) {
+    // prepare and send error response here, i.e.,
+    res.json({ message: error.message });
+    // set an error code and send JSON message
+    console.log(JSON.stringify(err));
+    return;
+}
 
+```
 
 ### (d) Test Good and Bad in order
 
