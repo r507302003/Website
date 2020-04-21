@@ -1,153 +1,117 @@
-# Homework #8 Solution
-
+# Homework #9 Solution
 **Student Name**:  Tien-Hui Feng
 **NetID**: vd8386
 
 
-## Question 1 
+## Question 1 Securing User Passwords
 
-### (a)
-### What HTTP Method is used in the request?
-GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE
+### (a) Hash user passwords
 
-### What is the response code and what does it mean?
-HTTP response code indicates what is about to happen.
-1. 200 means OK
-2. 301 means Moved Permanently 
-3. 302 means Found (Moved Temporarily)
-4. 401 means Unauthorized
-5. 403 means Forbidden
-6. 404 means Not Found (the error code)
-7. 410 means Gone
-8. 500 means Internal Server Error
-9. 503 means Service Unavailable 
-    
-### What version of HTTP is being used?
-HTTP/1.1
+hashUsers.js
+``` javascript
+users.forEach(function(user){
+    let passHash = bcrypt.hashSync(user.password, nRounds);
+    user.password = passHash;
+    hashedUsers.push(user);    
+});
 
-### (b) List the request headers and their values here (copy and paste)
-* Controls: Host, Cache-Control, Expect, …
-* Content Negotiation: Accept, Accept-Charset, Accept-Encoding, Accept-Language
-* Authentication Credentials: Authorization, Proxy-Authorization
-* Request Context: From, Referer, User-Agent
+[
+  {
+    "firstName": "Melia",
+    "lastName": "Barker",
+    "email": "tirrivees1820@outlook.com",
+    "password": "$2a$10$.wAqcJN1vIhoCw4vVoP6fuvhuWD8DP61Bup2CuXAb1.0KouLdqNzq",
+    "role": "admin"
+  },
+  {
+    "firstName": "Demetrice",
+    "lastName": "Parker",
+    "email": "chihuahua1899@gmail.com",
+    "password": "$2a$10$q8SqNk6jYX6/omJnOVsbX.QnwXiz6wmOMiJKmlqFHrxxnzIX7lgWG",
+    "role": "member"
+  },
+  {
+    "firstName": "Ligia",
+    "lastName": "Hudson",
+    "email": "umbrate1989@yahoo.com",
+    "password": "$2a$10$pjWFUoE.uMdL5Az1pFb1IuVs26ddfx0N2oPkpoEg0X9kUbDzifDVK",
+    "role": "member"
+```
 
-### (c) List the response headers and their values here (copy and paste)
-* Control Data: Age, Cache-Control, Expires, Date, Location,…
-* Validator Fields: Etag, Last-Modified
-* Authentication Challenges: WWW-Authenticate, Proxy-Authenticate
-* Response Context: Accept-Ranges, Allow, Server
-
-### (d) What server is BlackBoard based on?
-openresty/1.9.3.1
-
-### Are any cookies set? If so what are they.
-Set-Cookie: AWSELB=D3570BC914533D9ACC5FBEA2A258730F699E691A0AC95F4514958C9FF4BF56EAF7767641A593B13DE042F3F65C024717188E5568556FFDF9A4315C07865F178080F8F4D11D;PATH=/;MAX-AGE=900
-Set-Cookie: AWSELBCORS=D3570BC914533D9ACC5FBEA2A258730F699E691A0AC95F4514958C9FF4BF56EAF7767641A593B13DE042F3F65C024717188E5568556FFDF9A4315C07865F178080F8F4D11D;PATH=/;MAX-AGE=900;SECURE;SAMESITE=None
-
-### (e) URLs 
-### For the following URLs identify the protocol, domain, port, path, query and fragment portions (if any):
-
-#### https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types#Comments
-* protocol: "https:"
-* domain: developer.mozilla.org
-* port: 443
-* path: "/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types"
-* fragment portions: Comments
+### (b) bcrypt work
+![13sec](images/1b.JPG)
 
 
-#### https://www.google.com/search?q=gaia+mission&rlz=1CYPO_enUS751
-* protocol: "https:"
-* domain: www.google.com
-* port: 443
-* path: "/search?q=gaia+mission&rlz=1CYPO_enUS751"
-* query: ?q=gaia+mission&rlz=1CYPO_enUS751 
+## Question 2 Basic Login Interface and Test
 
-#### http://127.0.0.2:8282/static/index.html
-* Error: connect ECONNREFUSED 127.0.0.2:8282 
-* domain: 127.0.0.2
-* port: 8282
-* path: "static/index.html"
-
-
-## Question 2 Simple Servers
-
-### (a) Simple Date Server
-![date](images/2a.JPG)
-
-### (b) Simple Name/NetID Server
-![netid](images/2b.JPG)
-
-### (c) Combine services
-![combine](images/2c.JPG)
-
-
-## Question 3 JSON Server Get
-
-### (a) Get Activities
-![JSONfromFile](images/3a.JPG)
-
-### (b)Test via Requests
-![getJSONfromWeb](images/3b.JPG)
-
-
-## Question 4 JSON Server Post
-
-### (a) Add Activity 
+### (a) Login interface and handler
 ```javascript 
-app.use(bodyParser());
-
-app.post('/activities', express.json(), function(req, res) {
-    console.log(`path /activities received: ${JSON.stringify(req.body)}`);
-    activities.push(req.body);
-    res.json(activities);
+app.post('/login', function(req, res){
+    db.user.findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(function(usr){
+        if(!usr){
+            res.status(401).send({"error": true, "message": "User/Email error" });
+        }else{
+            bcrypt.compare(req.body.password, user.password, function (err, result){
+            if(result == true){
+                let passHash = bcrypt.hashSync(usr.password, nRounds);
+                usr.password = passHash;
+                users.push(usr);   
+            } else{
+                res.status(401).send({"error": true, "message": "User/password error" });
+            }}) 
+            }
+    }
+    )
 });
 
 ```
-### (b) Test with Requests
-```javascript 
-// Testing a JSON post interface
-const request = require('request');
-
-const postInfo = {
-    url: 'http://127.8.88.5:8386/activities',
-    method: "POST",
-    json: true,
-    body: {
-        name: "new Act", 
-        location: "room 214", 
-        time: "2:00 - 3:00", 
-        dates:"May 3"}
-};
-
-console.log("POST JSON test");
-request(postInfo, function(error, res, body) {
-    console.log(error);
-    console.log(body);
-});
-
-```
-![addactivity](images/4b.JPG)
-
-### (c) Security: Input Limits
-```javascript 
-app.use(activityErrors);
-function activityErrors(err, req, res, next) {
-    // prepare and send error response here, i.e.,
-    res.json({ message: error.message });
-    // set an error code and send JSON message
-    console.log(JSON.stringify(err));
-    return;
-}
-
-```
-
-### (d) Test Good and Bad in order
 
 
-## Question 5. Delete Activity
+
+### (b) Test Login Interface
 
 
-### (a) Delete Activity
 
-### (b) Test with Requests
+## Question 3 Sessions/Login
+
+### (a) Add express-session to your clubServer
+
+
+
+### (b) Test Session Cookies
+
+
+### (c) Update login POST route
+
+
+### (d) Create a logout GET path 
+
+
+### (e) Testing login, logout, and cookies
+
+
+
+
+## Question 4 Protect Add Activity Interface
+
+### (a) Create and Insert Protection Middleware 
+Create middleware that checks for the “admin” role and if it doesn’t find it returns a “Forbidden” code and JSON error message. Add that middleware to the POST handler for adding tours. Show the code for that middleware here.
+
+
+### (b) Testing Protected Interface
+
+
+
+
+## Question 5. Protected Get Users Interface
+
+### (a) Create /users Interface
+
+
+
+### (b) Test Protected /users Interface
 

@@ -1,14 +1,16 @@
 const express = require('express');
 const app = express();
-var path = require('path');
-var bodyParser = require('body-parser');
 var fs = require('fs');
-const activities = require('./activities.json');
-
+var path = require('path');
+const data = fs.readFileSync('./activities.JSON');
+const activities = JSON.parse(data);
+const bcrypt = require('bcryptjs');
+const users = require('./clubUsersHash.json');
 
 
 app.get('/activities', function (req, res) {
-    res.json(activities);
+    res.header("Content-Type",'application/json');
+    res.sendFile(path.join(__dirname, 'activities.JSON')); 
 });
 
 
@@ -22,7 +24,30 @@ function activityErrors(err, req, res, next) {
 }
 
 
-app.post('/activities', express.json({limit:ACT_SIZE_LIMIT}), 
+app.post('/login', function(req, res){
+    db.user.findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(function(usr){
+        if(!usr){
+            res.status(401).send({"error": true, "message": "User/Email error" });
+        }else{
+            bcrypt.compare(req.body.password, user.password, function (err, result){
+            if(result == true){
+                let passHash = bcrypt.hashSync(usr.password, nRounds);
+                usr.password = passHash;
+                users.push(usr);   
+            } else{
+                res.status(401).send({"error": true, "message": "User/password error" });
+            }}) 
+            }
+    }
+    )
+});
+
+
+app.post('/activities', express.json({limit: 'ACT_SIZE_LIMIT'}), 
     function(req, res, next) {
         let activity = req.body;
         console.log(JSON.stringify(activity));
@@ -30,7 +55,7 @@ app.post('/activities', express.json({limit:ACT_SIZE_LIMIT}),
         res.json(activities);
     },
     activityErrors
-        );
+);
 
 app.delete('/activities/:index', function (req, res){
     let index = req.params.index; 
@@ -44,18 +69,14 @@ app.delete('/activities/:index', function (req, res){
     res.json(activities);
 });
 
+ 
+
+
+
+
 const port = '8386';
 const host = '127.8.88.5';
 
 app.listen(port, host, function () {
 console.log(`Club Server listening on IPv4: ${host}:${port}`);
 });
-
-
-function activityErrors(err, req, res, next) {
-    // prepare and send error response here, i.e.,
-    res.json({ message: error.message });
-    // set an error code and send JSON message
-    console.log(JSON.stringify(err));
-    return;
-}

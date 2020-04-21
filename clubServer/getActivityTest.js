@@ -7,7 +7,7 @@ var options = {
 
 rp(options).then(function (body) {
         body.forEach(function(activity, i){
-            console.log(`Activity ${i+1} name ${activity.name}, date: ${activity.date}`);
+            console.log(`Activity ${i+1} name ${activity.name}, location:${activity.location}`);
         });
     }).catch(function (err) {
         console.log(`Error: ${err}`);
