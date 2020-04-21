@@ -48,7 +48,7 @@ users.forEach(function(user){
 ```javascript 
 app.post('/login', express.json(), function(req, res){
     let email = req.body.email; 
-    let passsword = req.body.password; 
+    let password = req.body.password; 
     let auser = users.find(function (usr){
         return usr.email === email
     });
@@ -79,8 +79,18 @@ app.post('/login', express.json(), function(req, res){
 ## Question 3 Sessions/Login
 
 ### (a) Add express-session to your clubServer
+```javascript
+var session = require('express-session');
 
+const cookieName = "vd8386"; // Session ID cookie name, use this to delete cookies too.
+app.use(session({
+	secret: 'session.user = {role: "guest"}',
+	resave: false,
+	saveUninitialized: false,
+	name: cookieName // Sets the name of the cookie used by the session middleware
+}));
 
+```
 
 ### (b) Test Session Cookies
 

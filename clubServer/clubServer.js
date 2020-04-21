@@ -6,7 +6,16 @@ const data = fs.readFileSync('./activities.JSON');
 const activities = JSON.parse(data);
 const bcrypt = require('bcryptjs');
 const users = require('./clubUsersHash.json');
+const session = require('express-session');
 
+const cookieName = "vd8386"; // Session ID cookie name, use this to delete cookies too.
+app.use(session({
+	secret: session.user = {role: "guest"},
+	resave: false,
+	saveUninitialized: true,
+	cookie: { secure: true },
+    name: cookieName
+}));
 
 app.get('/activities', function (req, res) {
     res.header("Content-Type",'application/json');
