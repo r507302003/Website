@@ -61,7 +61,6 @@ rp(initialGet)
     }
     // Ordered promise chain
     rp(initialGet)
-    10
     .then(function(data) {
     console.log("Initial Get of activities")
     printActivities(data);

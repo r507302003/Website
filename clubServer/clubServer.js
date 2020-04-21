@@ -24,27 +24,28 @@ function activityErrors(err, req, res, next) {
 }
 
 
-app.post('/login', function(req, res){
-    db.user.findOne({
-        where: {
-            email: req.body.email
+app.post('/login', express.json(), function(req, res){
+    let email = req.body.email; 
+    let password = req.body.password; 
+    let auser = users.find(function (usr){
+        return usr.email === email
+    });
+    if(!auser){
+        res.status(401).send({error: true, message: "User/Email error" });
+        return;
+    }else{
+        bcrypt.compareSync(password, auser.password, function (err, result){
+        if(result == true){
+            let newUserInfo = Object.assign(oldInfo, auser);
+            delete newUserInfo.password; 
+            req.session.user = newUserInfo; 
+            res.json(newUserInfo);
+        } else{
+            res.status(401).send({"error": true, "message": "User/password error" });
+        }}) 
         }
-    }).then(function(usr){
-        if(!usr){
-            res.status(401).send({"error": true, "message": "User/Email error" });
-        }else{
-            bcrypt.compare(req.body.password, user.password, function (err, result){
-            if(result == true){
-                let passHash = bcrypt.hashSync(usr.password, nRounds);
-                usr.password = passHash;
-                users.push(usr);   
-            } else{
-                res.status(401).send({"error": true, "message": "User/password error" });
-            }}) 
-            }
-    }
-    )
-});
+    });
+
 
 
 app.post('/activities', express.json({limit: 'ACT_SIZE_LIMIT'}), 
