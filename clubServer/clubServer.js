@@ -10,12 +10,30 @@ const session = require('express-session');
 
 const cookieName = "vd8386"; // Session ID cookie name, use this to delete cookies too.
 app.use(session({
-	secret: session.user = {role: "guest"},
+	secret: TienHuiFeng vd8386,
 	resave: false,
 	saveUninitialized: true,
 	cookie: { secure: true },
     name: cookieName
 }));
+
+
+function checkCustomerMiddleware(req, res, next) {
+	if (req.session.user.role === "guest") {
+		res.status(401).json({error: "Not permitted"});;
+	} else {
+		next();
+	}
+};
+
+function checkAdminMiddleware(req, res, next) {
+	if (req.session.user.role !== "admin") {
+		res.status(401).json({error: "Not permitted"});;
+	} else {
+		next();
+	}
+};
+
 
 app.get('/activities', function (req, res) {
     res.header("Content-Type",'application/json');

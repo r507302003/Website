@@ -80,15 +80,25 @@ app.post('/login', express.json(), function(req, res){
 
 ### (a) Add express-session to your clubServer
 ```javascript
-var session = require('express-session');
+const session = require('express-session');
 
 const cookieName = "vd8386"; // Session ID cookie name, use this to delete cookies too.
 app.use(session({
-	secret: 'session.user = {role: "guest"}',
+	secret: TienHuiFeng vd8386,
 	resave: false,
-	saveUninitialized: false,
-	name: cookieName // Sets the name of the cookie used by the session middleware
+	saveUninitialized: true,
+	cookie: { secure: true },
+    name: cookieName
 }));
+
+
+function checkCustomerMiddleware(req, res, next) {
+	if (req.session.user.role === "guest") {
+		res.status(401).json({error: "Not permitted"});;
+	} else {
+		next();
+	}
+};
 
 ```
 
@@ -96,10 +106,45 @@ app.use(session({
 
 
 ### (c) Update login POST route
+```javascript 
+app.post('/login', express.json(), function(req, res){
+    let email = req.body.email; 
+    let password = req.body.password; 
+    let auser = users.find(function (usr){
+        return usr.email === email
+    });
+    if(!auser){
+        res.status(401).send({error: true, message: "User/Email error" });
+        return;
+    }else{
+        bcrypt.compareSync(password, auser.password, function (err, result){
+        if(result == true){
+            let newUserInfo = Object.assign(oldInfo, auser);
+            delete newUserInfo.password; 
+            req.session.user = newUserInfo; 
+            res.json(newUserInfo);
+        } else{
+            res.status(401).send({"error": true, "message": "User/password error" });
+        }}) 
+        }
+    });
 
+```
 
 ### (d) Create a logout GET path 
+```javascript 
+app.get('/logout', function (req, res) {
+	let options = req.session.cookie;
+	req.session.destroy(function (err) {
+		if (err) {
+			console.log(err);
+		}
+		res.clearCookie(cookieName, options); // the cookie name and options
+		res.json({message: "Goodbye"});
+	})
+});
 
+``` 
 
 ### (e) Testing login, logout, and cookies
 
@@ -120,7 +165,17 @@ Create middleware that checks for the “admin” role and if it doesn’t find 
 ## Question 5. Protected Get Users Interface
 
 ### (a) Create /users Interface
+```javascript 
+function checkAdminMiddleware(req, res, next) {
+	if (req.session.user.role !== "admin") {
+		res.status(401).json({error: "Not permitted"});;
+	} else {
+		next();
+	}
+};
 
+
+```
 
 
 ### (b) Test Protected /users Interface
