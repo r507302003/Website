@@ -1,90 +1,102 @@
 // Testing a JSON post interface
 const rp = require('request-promise-native');
-const verbose = false;
+const cookieJar = rp.jar();
 
+let baseURL = 'http://s127.8.88.5:8386';
 
-const initialGet={
-    uri:'http://127.8.88.5:8386/activities', 
+let loginAdmin = {
+    uri: baseURL + '/login',
     json: true,
-    method:'GET'
+    method: "POST",
+    body: {
+        "email": "tirrivees1820@outlook.com",
+        "password": "49OqspUq"},
+    jar: cookieJar
 };
 
-const firstPost = {
-    uri: 'http://127.8.88.5:8386/activities',
+let loginMember = {
+    uri: baseURL + '/login',
+    json: true,
+    method: "POST",
+    body: {
+        "email": "umbrate1989@yahoo.com",
+        "password": "n3pLS4|=" },
+    jar: cookieJar
+};
+
+let activities = {
+    uri: baseURL + '/activities',
+    json: true,
+    method: "GET",
+    jar: cookieJar
+};
+
+let addActivity = {
+    uri: baseURL + '/activities',
     method: "POST",
     json: true,
-    body: {
-        name: "new Act", 
-        location: "room 214", 
-        time: "2:00 - 3:00", 
-        dates:"May 3"}
+    body: { 
+        name: "NEW ACT",
+        dates: "TODAY!" },
+    jar: cookieJar
 };
 
-function printActivities(data) {
-    console.log(`Currently ${data.length} activities`);
-    data.forEach(function(activity, i) {
-    console.log(`Activity ${i+1} name ${activity.name}, date: ${activity.dates}`);
-    });
+let logout = {
+    uri: baseURL + '/logout',
+    json: true,
+    method: "GET",
+    jar: cookieJar
 }
 
-rp(initialGet)
-    .then(function(data){
-        printActivities(data);
-        return rp(firstPost)
-    }).then(function(data){
-        printActivities(data);
-});
+function allCookies() {
+    return cookieJar.getCookieString(baseURL);
+}
 
-/*
-    const rp = require("request-promise-native");
-    const verbose = false;
-    const bigText = `A really big block of text: A still more...`;
-    let firstPost = {
-    uri: "http://127.0.0.11:1711/activities",
-    json: true,
-    method: "POST",
-    body: { name: "Happy Wind Afternoons", dates: "Whenever the wind blows" }
-    };
-    const longBody = { name: bigText, dates: "Millions and Millions" };
-    const badPost = Object.assign({}, firstPost, { body: longBody });
-    // initialGet, anotherGoodPost omitted to save space
-    function printActivities(data) {
-    console.log(`Currently ${data.length} activities`);
-    if (!verbose) {
-    return;
+
+async function someTests() {
+    let res;
+    console.log('Add Activity Test 1: Admin Login');
+    try {
+        res = await rp(loginAdmin);
+        console.log(`Admin login, Cookies: ${allCookies()}`);
+        res = await rp(activities);
+        console.log(`Number of activities: ${res.length}\n`);
+        res = await rp(addActivity);
+        console.log(`After add number of activities: ${res.length}\n`);
+        res = await rp(logout);
+        console.log(`After logout, Cookies: ${allCookies()}\n`);
+    } catch (error) {
+        console.log(`Admin login error: ${error}\n`);
     }
-    data.forEach(function(activity, i) {
-    console.log(
-    `Activity ${i + 1} name ${activity.name}, date: ${activity.dates}`
-    );
-    });
+    console.log("Add Test 2: Member Login");
+    try {
+        res = await rp(loginMember);
+        console.log(`Member login, Cookies: ${allCookies()}`);
+        res = await rp(activities);
+        console.log(`Number of activities: ${res.length}\n`);
+        res = await rp(addActivity);
+        console.log(`After add number of activities: ${res.length}\n`);
+        res = await rp(logout);
+        console.log(`After logout, Cookies: ${allCookies()}\n`);
+    } catch (error) {
+        console.log(`Member add activity error: ${error}`);
+        res = await rp(activities);
+        console.log(`Number of activities: ${res.length}\n`);
+        res = await rp(logout);
+        console.log(`After logout, Cookies: ${allCookies()}\n`);
     }
-    // Ordered promise chain
-    rp(initialGet)
-    .then(function(data) {
-    console.log("Initial Get of activities")
-    printActivities(data);
-    return rp(firstPost);
-    })
-    .then(function(data) {
-    console.log("After First Good Activity Post")
-    printActivities(data);
-    return rp(badPost);
-    })
-    .then(function(data) {
-    // This branch won't be taken
-    printActivities(data);
-    return rp(anotherGoodPost);
-    })
-    .catch(function(err) {
-    console.log("After First Bad Activity Post")
-    console.log(`Error: ${err}`);
-    return rp(anotherGoodPost);
-    })
-    .then(function(data) {
-    console.log("After Another Good Activity Post")
-    printActivities(data);
-    });
+    console.log(`After Login test 2, Cookies: ${allCookies()}\n`);
+    console.log("Add Activity Test 3: Guest");
+    try {
+        res = await rp(activities);
+        console.log(`Number of activities: ${res.length}\n`);
+        res = await rp(addActivity);
+        console.log(`After add number of activities: ${res.length}\n`);
+        res = await rp(loginBadPass);
+    } catch (error) {
+        console.log(`Bad password login error: ${error}\n`);
+        }
+    console.log(`After Activity test 3, Cookies: ${allCookies()}\n`);
+}
 
-
-*/
+someTests();

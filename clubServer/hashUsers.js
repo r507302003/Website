@@ -7,11 +7,14 @@ let start = new Date();  //timing code
  console.log(`Starting password hashing with nRounds = ${nRounds}, ${start}`);
 
 
-users.forEach(function(user){
-    let passHash = bcrypt.hashSync(user.password, nRounds);
-    user.password = passHash;
-    hashedUsers.push(user);    
-});
+users.forEach(function(u){
+let salt = bcrypt.genSaltSync(nRounds);
+let passHash = bcrypt.hashSync(u.password, salt);
+let hashedUser = Object.assign({}, u, {passHash: passHash});
+delete hashedUser.password;
+hashedUsers.push(hashedUser);
+})
+
 
 
 let elapsed = new Date() - start; // timing code

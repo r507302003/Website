@@ -173,25 +173,31 @@ function checkCustomerMiddleware(req, res, next) {
 ### (c) Update login POST route
 ```javascript 
 app.post('/login', express.json(), function(req, res){
+    console.log(req.body);
     let email = req.body.email; 
     let password = req.body.password; 
     let auser = users.find(function (usr){
         return usr.email === email
     });
     if(!auser){
-        res.status(401).send({error: true, message: "User/Email error" });
+        res.status(401).json({error: true, message: "User/Email error" });
         return;
-    }else{
-        bcrypt.compareSync(password, auser.password, function (err, result){
-        if(result == true){
-            let newUserInfo = Object.assign(oldInfo, auser);
-            delete newUserInfo.password; 
-            req.session.user = newUserInfo; 
+    }
+    let verified = bcrypt.compareSync(password, auser.passHash);
+    if(verified){
+        let newUserInfo = Object.assign({}, auser);
+        delete newUserInfo.passHash; 
+        let oldInfo = req.session.user; 
+        req.session.regenerate(function(err){
+            if(err){
+                console.log(err);
+            }
+            req.session.user = Object.assign(oldInfo, newUserInfo); 
             res.json(newUserInfo);
-        } else{
-            res.status(401).send({"error": true, "message": "User/password error" });
-        }}) 
-        }
+        });
+    } else{
+        res.status(401).json({"error": true, "message": "User/password error" });
+        } 
     });
 
 ```
@@ -219,7 +225,17 @@ app.get('/logout', function (req, res) {
 ## Question 4 Protect Add Activity Interface
 
 ### (a) Create and Insert Protection Middleware 
-Create middleware that checks for the “admin” role and if it doesn’t find it returns a “Forbidden” code and JSON error message. Add that middleware to the POST handler for adding tours. Show the code for that middleware here.
+
+```javascript
+
+function checkAdminMiddleware(req, res, next) {
+	if (req.session.user.role !== "admin") {
+		res.status(401).json({error: "Not permitted"});;
+	} else {
+		next();
+	}
+};
+```
 
 
 ### (b) Testing Protected Interface
@@ -231,14 +247,18 @@ Create middleware that checks for the “admin” role and if it doesn’t find 
 
 ### (a) Create /users Interface
 ```javascript 
-function checkAdminMiddleware(req, res, next) {
-	if (req.session.user.role !== "admin") {
-		res.status(401).json({error: "Not permitted"});;
-	} else {
-		next();
-	}
-};
 
+app.get('/users', checkAdminMiddleware, function(req, res){
+    let noPassHash = users.map(function (user){
+        return{
+            "firstName": user.firstName, 
+            "lastName": user.lastName,
+            "email": user.email, 
+            "role": user.role
+        };
+    })
+    res.json(noPassHash);
+});
 
 ```
 

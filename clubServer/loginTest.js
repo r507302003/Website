@@ -1,64 +1,81 @@
 const rp = require("request-promise-native");
+const cookieJar = rp.jar();
 
-let initialGet={
-    uri: "http://127.8.88.5:8386/activities",
-    json: true,
-    method: 'GET'
-}
 let goodLogin = {
     uri: "http://127.8.88.5:8386/login",
     json: true,
     method: "POST",
-    body: { firstName: "Melia",
-            lastName: "Barker",
-            email: "tirrivees1820@outlook.com",
-            password: "$2a$13$9FSQlmbk7YsK/UmzTIL64enuRkKmrHKRWzPk8MmXIa3WuaAp5sfJe",
-            "role": "admin"} 
+    body: { "email": "tirrivees1820@outlook.com",
+           "password": "49OqspUq"},
+    jar: cookieJar    
 };
 
 let emailErr = {
     uri: "http://127.8.88.5:8386/login",
     json: true,
     method: "POST",
-    body: { firstName: "Melia",
-            lastName: "Barker",
-            email: "worng0@outlook.com",
-            password: "$2a$13$9FSQlmbk7YsK/UmzTIL64enuRkKmrHKRWzPk8MmXIa3WuaAp5sfJe",
-            "role": "admin"} 
+    body: { "email": "sylvan206@live.com",
+        	"password": "1wQX_lYt"},
+    jar: cookieJar
 };    
     
 let pswdErr = {
     uri: "http://127.8.88.5:8386/login",
     json: true,
     method: "POST",
-    body: { firstName: "Melia",
-            lastName: "Barker",
-            email: "tirrivees1820@outlook.com",
-            password: "$2a$13$9FWzPk8MmXIa3WuaAp5sfJe",
-            "role": "admin"} 
-};    
+    body: { "email": "tirrivees1820@outlook.com",
+           "password": "2wQX_lYt"},
+    jar: cookieJar
+};
+let activities = {
+    uri: 'http://127.8.88.5:8386/activities',
+    json: true,
+    method: "GET",
+    jar: cookieJar
+};
 
-function printUser(data) {
-    console.log(`{ "firstName": ${data.firstname}, "lastName": ${data.lastName}, "email": ${data.email}, "password": ${data.password} }  `);
-}    
+let logout = {
+    uri: 'http://127.8.88.5:8386/logout',
+    json: true,
+    method: "GET",
+    jar: cookieJar
+};
+
+function allCookies() {
+    return cookieJar.getCookieString('http://127.8.88.5:8386/');
+};
+
+async function someTests() {
+    let res;
+    try {
+        res = await rp(activities);
+        console.log(`Called activities, Cookies: ${allCookies()}`);
     
-rp(initialGet).then(function(data) {
-    return rp(goodLogin);
-})
-.then(function(data) {
-    console.log("Good Login test result: ");
-    printUser(data);
-    return rp(emailErr);
-})
-.catch(function(err) {
-    console.log("Bad Email Login Error: ")
-    printUser(data);
-    return rp(pswdErr);
-})
-.then(function(data) {
-    printUser(data);
-    return rp(pswdErr);
-})
-.catch(function(err) {
-    console.log("Bad Password Login Error: ")
-})
+        res = await rp(goodLogin);
+        console.log(`Good login test result: ${JSON.stringify(res)}\n`);
+        console.log(`After good login, Cookies: ${allCookies()}\n`);
+        
+        res = await rp(logout);
+        console.log(`After logout, Cookies: ${allCookies()}\n`);
+    } catch (error) {
+        console.log(`Good login error: ${error}\n`);  }
+        console.log("Login Test 2: Bad Email");
+    try {
+        res = await rp(activities);
+        console.log(`Called activities, Cookies: ${allCookies()}`);
+        res = await rp(emailErr);
+        console.log(`Bad email login test result: ${JSON.stringify(res)}\n`);
+    } catch (error) {
+        console.log(`Bad email login error: ${error}`);  }
+        console.log(`After Login test 2, Cookies: ${allCookies()}\n`);
+        console.log("Login Test 3: Bad Password");
+    try {
+        res = await rp(pswdErr);
+        console.log(`Bad password login test result: ${JSON.stringify(res)}\n`);
+    } catch (error) {
+        console.log(`Bad password login error: ${error}\n`);
+        }
+        console.log(`After Login test 3, Cookies: ${allCookies()}\n`);
+    }
+
+someTests();

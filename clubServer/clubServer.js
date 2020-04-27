@@ -10,13 +10,20 @@ const session = require('express-session');
 
 const cookieName = "vd8386"; // Session ID cookie name, use this to delete cookies too.
 app.use(session({
-	secret: TienHuiFeng vd8386,
+	secret: 'TienHuiFeng vd8386',
 	resave: false,
-	saveUninitialized: true,
-	cookie: { secure: true },
+	saveUninitialized: false,
     name: cookieName
 }));
 
+app.use(function (req, res, next) {
+    console.log(`session object: ${JSON.stringify(req.session.user)}`);
+    console.log(`session id: ${req.session.id}`);
+    if (!req.session.user) {
+        req.session.user = {role: "guest"};
+    }
+    next();
+});
 
 function checkCustomerMiddleware(req, res, next) {
 	if (req.session.user.role === "guest") {
@@ -52,28 +59,43 @@ function activityErrors(err, req, res, next) {
 
 
 app.post('/login', express.json(), function(req, res){
+    console.log(req.body);
     let email = req.body.email; 
     let password = req.body.password; 
     let auser = users.find(function (usr){
         return usr.email === email
     });
     if(!auser){
-        res.status(401).send({error: true, message: "User/Email error" });
+        res.status(401).json({error: true, message: "User/Email error" });
         return;
-    }else{
-        bcrypt.compareSync(password, auser.password, function (err, result){
-        if(result == true){
-            let newUserInfo = Object.assign(oldInfo, auser);
-            delete newUserInfo.password; 
-            req.session.user = newUserInfo; 
+    }
+    let verified = bcrypt.compareSync(password, auser.passHash);
+    if(verified){
+        let newUserInfo = Object.assign({}, auser);
+        delete newUserInfo.passHash; 
+        let oldInfo = req.session.user; 
+        req.session.regenerate(function(err){
+            if(err){
+                console.log(err);
+            }
+            req.session.user = Object.assign(oldInfo, newUserInfo); 
             res.json(newUserInfo);
-        } else{
-            res.status(401).send({"error": true, "message": "User/password error" });
-        }}) 
-        }
+        });
+    } else{
+        res.status(401).json({"error": true, "message": "User/password error" });
+        } 
     });
 
-
+app.get('/logout', function (req, res) {
+	let options = req.session.cookie;
+	req.session.destroy(function (err) {
+		if (err) {
+			console.log(err);
+		}
+		res.clearCookie(cookieName, options); // the cookie name and options
+		res.json({message: "Goodbye"});
+	})
+});
 
 app.post('/activities', express.json({limit: 'ACT_SIZE_LIMIT'}), 
     function(req, res, next) {
@@ -97,6 +119,18 @@ app.delete('/activities/:index', function (req, res){
     res.json(activities);
 });
 
+
+app.get('/users', checkAdminMiddleware, function(req, res){
+    let noPassHash = users.map(function (user){
+        return{
+            "firstName": user.firstName, 
+            "lastName": user.lastName,
+            "email": user.email, 
+            "role": user.role
+        };
+    })
+    res.json(noPassHash);
+});
  
 
 
