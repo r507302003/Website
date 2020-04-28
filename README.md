@@ -106,7 +106,7 @@ app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
 ```
 
 ### (c) Test Server with Activities Database
-![deltest]('./images/2c.JPG')
+![deltest]('images/2c.JPG')
 
 ## Question 3 Proxies
 
@@ -139,7 +139,7 @@ app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
     Check if server running, and sync.  
 
 ### (c) Configure, run, and debug the dev. proxy
-![proxy]('./images/3c.JPG')
+![proxy]('images/3c.JPG')
 
 
 ## Question 4 Fetch for Login
