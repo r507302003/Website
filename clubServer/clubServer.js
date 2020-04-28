@@ -14,8 +14,8 @@ actdb.find({}, function(err, docs) {
     if (err) {
         console.log("something is wrong");
     } else {
-        console.log("We found " + docs.length + " activities");
-        console.log(docs);
+        //console.log("We found " + docs.length + " activities");
+        //console.log(docs);
     }
 });
 
@@ -58,8 +58,7 @@ function checkAdminMiddleware(req, res, next) {
 
 // home page
 app.get('/activities', function (req, res) {
-    res.header("Content-Type",'application/json');
-    res.json(activities);
+    res.sendFile(path.join(__dirname, 'activities.JSON'));
     /*actdb.find().toArray(function(err, results) {
       if (err) {
           // do something error-y

@@ -114,13 +114,13 @@ app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
 
 ### (b) Development Proxy
 1. Where should the development proxy (devProxy) code be located? E.g., with the React client code or with the server code?
- with the react development server code
+ Neither. Create a new file in bewteen client and server 
 
 2. What paths are you going to forward to the server?
-    /activities
+    '/activities', '/login', '/logout', '/users'
     
 3. On what IP address and port are you going to run your club server?
-    localhost:1234
+    http://127.8.88.5:8386
 
 4. On what IP address and port are you going to run your devProxy?
     http://127.8.88.5:8386
@@ -136,10 +136,10 @@ app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
     * [parcel-bundler](https://parceljs.org/api.html#middleware)
 
 8. How can you test that the proxy is forwarding your requests?
-    Check if server running, and aync.  
+    Check if server running, and sync.  
 
 ### (c) Configure, run, and debug the dev. proxy
-
+![proxy]('./images/3c.JPG')
 
 
 ## Question 4 Fetch for Login
