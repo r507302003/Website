@@ -24,6 +24,9 @@ class Login extends React.Component {
     }
     
     loginInfo(){
+        fetch('/logInfo').then(function(response){
+            console.log(response);
+        });
         if(this.state.email === 'admin@email.org'){
             this.setRole('admin', ''); 
            }
@@ -34,6 +37,25 @@ class Login extends React.Component {
             alert('Account Not Exist');
         }
     }
+    
+    
+    /*postFetch(){
+        fetch('/logInfo',{
+            method: 'POST',
+            headers:{
+                "Content-type": "application/json"
+            }, 
+            body: JSON.stringify({
+                "firstName": "Melia",
+                "lastName": "Barker",
+                "email": "tirrivees1820@outlook.com",
+                "password": "49OqspUq",
+                "role": "admin"
+            })
+        }).then(function (response){
+            console.log('Request status code: ', response.statusText, response.status, response.type);
+        });
+    } */
 
     
     // Renders component based on current state and props

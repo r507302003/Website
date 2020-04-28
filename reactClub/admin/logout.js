@@ -28,6 +28,9 @@ class Logout extends React.Component {
     
     logoutHandler(){
         this.setRole("guest");
+        fetch('/logout').then(function(response){
+            console.log(response);
+        });
     }
 
     
@@ -35,18 +38,18 @@ class Logout extends React.Component {
     render() {
         return(
         <div className='format' >
-            <header id ='header'>
-                <h1> Log Out </h1>
-            </header>
-            <div className="center">
-                <div className="form">
-                    <label>User Account:  </label>
-                    <label> {this.state.name}</label>
-                    <label>User Email:  </label>
-                    <label>{this.state.email}</label>
-                    <input type="button" value="Logout" onClick={() => this.logoutHandler()} />
-                </div>
+        <header id ='header'>
+            <h1> Log Out </h1>
+        </header>
+        <div className="center">
+            <div className="form">
+                <label>User Account:  </label>
+                <label> {this.state.name}</label>
+                <label>User Email:  </label>
+                <label>{this.state.email}</label>
+                <input type="button" value="Logout" onClick={() => this.logoutHandler()} />
             </div>
+        </div>
         </div>
         );
     }

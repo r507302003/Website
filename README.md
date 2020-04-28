@@ -145,10 +145,38 @@ app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
 ## Question 4 Fetch for Login
 
 ### (a) Member and Admin Login 
-
+```javascript
+loginInfo(){
+    fetch('/logInfo').then(function(response){
+        console.log(response);
+    });
+    if(this.state.email === 'admin@email.org'){
+        this.setRole('admin', ''); 
+       }
+    else if(this.state.email === 'member@email.org'){
+        this.setRole('member', '');
+        }
+    else {
+        alert('Account Not Exist');
+    }
+}
+```
+![LogInfo](images/4a.JPG)
 
 ### (b) Member and Admin Logout
+```javascript 
+app.get('/logout', function (req, res) {
+	let options = req.session.cookie;
+	req.session.destroy(function (err) {
+		if (err) {
+			console.log(err);
+		}
+		res.clearCookie('Max-age':0, path:'/'); // the cookie name and options
+		res.json({message: "Goodbye"});
+	})
+});
 
+```
 
 
 
