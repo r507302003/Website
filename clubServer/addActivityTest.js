@@ -2,7 +2,7 @@
 const rp = require('request-promise-native');
 const cookieJar = rp.jar();
 
-let baseURL = 'http://s127.8.88.5:8386';
+let baseURL = 'http://127.8.88.5:8386';
 
 let loginAdmin = {
     uri: baseURL + '/login',

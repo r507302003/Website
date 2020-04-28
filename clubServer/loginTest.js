@@ -53,8 +53,7 @@ async function someTests() {
     
         res = await rp(goodLogin);
         console.log(`Good login test result: ${JSON.stringify(res)}\n`);
-        console.log(`After good login, Cookies: ${allCookies()}\n`);
-        
+        console.log(`After good login, Cookies: ${allCookies()}\n`);s
         res = await rp(logout);
         console.log(`After logout, Cookies: ${allCookies()}\n`);
     } catch (error) {

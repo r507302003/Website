@@ -1,267 +1,161 @@
-# Homework #9 Solution
+# Homework #10 Solution
 **Student Name**:  Tien-Hui Feng
 **NetID**: vd8386
 
 
-## Question 1 Securing User Passwords
+## Question 1 REST APIs
 
-### (a) Hash user passwords
+### (a) Check existing interfaces
+// path, method, return codes on sucess and failure
 
-hashUsers.js
+1. /activities
+* GET
+* sucess - 200
+* Not found - 404
+
+
+2. /activities
+* POST
+* sucess - 200
+* Not found - 404
+
+3. /activities/:index
+* DELETE
+* sucess - 200
+* No Content - 204
+
+4. /users
+* GET
+* sucess -200
+* unauthorized - 401
+
+
+### (b) REST like interfaces?
+
+### (c) Update Activity Interface
+
+/activities/:index
+* POST
+* 200
+* 401
+
+### (d) Add and Delete Club Member
+
+/login/modifyMember
+* POST
+* 200
+* 401
+
+### (e) Change Member Password
+/login/changePassword
+* POST
+* 200
+* 401
+
+## Question 2 Activities DataBase
+
+### (a) Create Initial Activity Database
+
+```javascript
+const DataStore = require('nedb');
+db = new DataStore({filename: __dirname + '/actDB', autoload: true});
+
+const activities = require('./activities.json');
+// We let NeDB create _id property for us.
+
+db.insert(activities, function(err, newDocs) {
+    if(err) {
+        console.log("Something went wrong when writing");
+        console.log(err);
+    } else {
+        console.log("Added " + newDocs.length + " activities");
+    }
+});
+
+```
+
+### (b) Integrate Database Into Server
+Use following code to get data from actDB
+```javascript 
+actdb = new DataStore({filename: __dirname + '/actDB', autoload: true});
+actdb.find({}, function(err, docs) {
+    if (err) {
+        console.log("something is wrong");
+    } else {
+        //print out activities
+        console.log("We found " + docs.length + " documents");
+        console.log(docs);
+    }
+});
+```
+The APIs need to be update: 
+* /activities, POST: 
+add following code to insert new activity into actDB
 ``` javascript
-users.forEach(function(user){
-    let passHash = bcrypt.hashSync(user.password, nRounds);
-    user.password = passHash;
-    hashedUsers.push(user);    
-});
-
-[
-  {
-    "firstName": "Melia",
-    "lastName": "Barker",
-    "email": "tirrivees1820@outlook.com",
-    "password": "$2a$10$.wAqcJN1vIhoCw4vVoP6fuvhuWD8DP61Bup2CuXAb1.0KouLdqNzq",
-    "role": "admin"
-  },
-  {
-    "firstName": "Demetrice",
-    "lastName": "Parker",
-    "email": "chihuahua1899@gmail.com",
-    "password": "$2a$10$q8SqNk6jYX6/omJnOVsbX.QnwXiz6wmOMiJKmlqFHrxxnzIX7lgWG",
-    "role": "member"
-  },
-  {
-    "firstName": "Ligia",
-    "lastName": "Hudson",
-    "email": "umbrate1989@yahoo.com",
-    "password": "$2a$10$pjWFUoE.uMdL5Az1pFb1IuVs26ddfx0N2oPkpoEg0X9kUbDzifDVK",
-    "role": "member"
+    actdb.insert(activity); 
 ```
-
-### (b) bcrypt work
-![13sec](images/1b.JPG)
-
-
-## Question 2 Basic Login Interface and Test
-
-### (a) Login interface and handler
+* /activities/:index, delete: 
 ```javascript 
-app.post('/login', express.json(), function(req, res){
-    let email = req.body.email; 
-    let password = req.body.password; 
-    let auser = users.find(function (usr){
-        return usr.email === email
-    });
-    if(!auser){
-        res.status(401).json({error: true, message: "User/Email error" });
-        return;
-    }else{
-        bcrypt.compareSync(password, auser.password, function (err, result){
-        if(result == true){
-            let newUserInfo = Object.assign(oldInfo, auser);
-            delete newUserInfo.password; 
-            req.session.user = newUserInfo; 
-            res.json(newUserInfo);
-        } else{
-            res.status(401).json({"error": true, "message": "User/password error" });
-        }}) 
-        }
-    }
-    )
-});
-
-```
-
-### (b) Test Login Interface
-![loginTest](images/2b.JPG)
-```javascript 
-const rp = require("request-promise-native");
-
-let initialGet={
-    uri: "http://127.8.88.5:8386/activities",
-    json: true,
-    method: 'GET'
-}
-let goodLogin = {
-    uri: "http://127.8.88.5:8386/login",
-    json: true,
-    method: "POST",
-    body: { firstName: "Melia",
-            lastName: "Barker",
-            email: "tirrivees1820@outlook.com",
-            password: "$2a$13$9FSQlmbk7YsK/UmzTIL64enuRkKmrHKRWzPk8MmXIa3WuaAp5sfJe",
-            "role": "admin"} 
-};
-
-let emailErr = {
-    uri: "http://127.8.88.5:8386/login",
-    json: true,
-    method: "POST",
-    body: { firstName: "Melia",
-            lastName: "Barker",
-            email: "worng0@outlook.com",
-            password: "$2a$13$9FSQlmbk7YsK/UmzTIL64enuRkKmrHKRWzPk8MmXIa3WuaAp5sfJe",
-            "role": "admin"} 
-};    
-    
-let pswdErr = {
-    uri: "http://127.8.88.5:8386/login",
-    json: true,
-    method: "POST",
-    body: { firstName: "Melia",
-            lastName: "Barker",
-            email: "tirrivees1820@outlook.com",
-            password: "$2a$13$9FWzPk8MmXIa3WuaAp5sfJe",
-            "role": "admin"} 
-};    
-
-function printUser(data) {
-    console.log(`{ "firstName": ${data.firstname}, "lastName": ${data.lastName}, "email": ${data.email}, "password": ${data.password} }  `);
-}    
-    
-rp(initialGet).then(function(data) {
-    return rp(goodLogin);
-})
-.then(function(data) {
-    console.log("Good Login test result: ");
-    printUser(data);
-    return rp(emailErr);
-})
-.catch(function(err) {
-    console.log("Bad Email Login Error: ")
-    printUser(data);
-    return rp(pswdErr);
-})
-.then(function(data) {
-    printUser(data);
-    return rp(pswdErr);
-})
-.catch(function(err) {
-    console.log("Bad Password Login Error: ")
-})
-```
-
-## Question 3 Sessions/Login
-
-### (a) Add express-session to your clubServer
-```javascript
-const session = require('express-session');
-
-const cookieName = "vd8386"; // Session ID cookie name, use this to delete cookies too.
-app.use(session({
-	secret: TienHuiFeng vd8386,
-	resave: false,
-	saveUninitialized: true,
-	cookie: { secure: true },
-    name: cookieName
-}));
-
-
-function checkCustomerMiddleware(req, res, next) {
-	if (req.session.user.role === "guest") {
-		res.status(401).json({error: "Not permitted"});;
-	} else {
-		next();
-	}
-};
-
-```
-
-### (b) Test Session Cookies
-
-
-### (c) Update login POST route
-```javascript 
-app.post('/login', express.json(), function(req, res){
-    console.log(req.body);
-    let email = req.body.email; 
-    let password = req.body.password; 
-    let auser = users.find(function (usr){
-        return usr.email === email
-    });
-    if(!auser){
-        res.status(401).json({error: true, message: "User/Email error" });
-        return;
-    }
-    let verified = bcrypt.compareSync(password, auser.passHash);
-    if(verified){
-        let newUserInfo = Object.assign({}, auser);
-        delete newUserInfo.passHash; 
-        let oldInfo = req.session.user; 
-        req.session.regenerate(function(err){
-            if(err){
-                console.log(err);
-            }
-            req.session.user = Object.assign(oldInfo, newUserInfo); 
-            res.json(newUserInfo);
+app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
+    let index = req.params.index; 
+    actdb.remove({_id: index },function (err, index) 
+    {
+        console.log("removed " + index);
         });
-    } else{
-        res.status(401).json({"error": true, "message": "User/password error" });
-        } 
-    });
-
+});    
 ```
 
-### (d) Create a logout GET path 
-```javascript 
-app.get('/logout', function (req, res) {
-	let options = req.session.cookie;
-	req.session.destroy(function (err) {
-		if (err) {
-			console.log(err);
-		}
-		res.clearCookie(cookieName, options); // the cookie name and options
-		res.json({message: "Goodbye"});
-	})
-});
+### (c) Test Server with Activities Database
+![deltest]('./images/2c.JPG')
 
-``` 
+## Question 3 Proxies
 
-### (e) Testing login, logout, and cookies
+### (a) Alternate Development Scenario
 
+### (b) Development Proxy
+1. Where should the development proxy (devProxy) code be located? E.g., with the React client code or with the server code?
+ with the react development server code
 
+2. What paths are you going to forward to the server?
+    /activities
+    
+3. On what IP address and port are you going to run your club server?
+    localhost:1234
 
+4. On what IP address and port are you going to run your devProxy?
+    http://127.8.88.5:8386
+    
+5. At which URL will you point your browser?
+    localhost:1234
+    
+6. How many command terminals do you need and what will be running in each?
+    Just key in localhost:1234 within path
+    
+7. What additional NPM packages do you need to install and where?
+    * [http-proxy-middleware](https://www.npmjs.com/package/http-proxy-middleware)
+    * [parcel-bundler](https://parceljs.org/api.html#middleware)
 
-## Question 4 Protect Add Activity Interface
+8. How can you test that the proxy is forwarding your requests?
+    Check if server running, and aync.  
 
-### (a) Create and Insert Protection Middleware 
-
-```javascript
-
-function checkAdminMiddleware(req, res, next) {
-	if (req.session.user.role !== "admin") {
-		res.status(401).json({error: "Not permitted"});;
-	} else {
-		next();
-	}
-};
-```
-
-
-### (b) Testing Protected Interface
+### (c) Configure, run, and debug the dev. proxy
 
 
 
+## Question 4 Fetch for Login
 
-## Question 5. Protected Get Users Interface
-
-### (a) Create /users Interface
-```javascript 
-
-app.get('/users', checkAdminMiddleware, function(req, res){
-    let noPassHash = users.map(function (user){
-        return{
-            "firstName": user.firstName, 
-            "lastName": user.lastName,
-            "email": user.email, 
-            "role": user.role
-        };
-    })
-    res.json(noPassHash);
-});
-
-```
+### (a) Member and Admin Login 
 
 
-### (b) Test Protected /users Interface
+### (b) Member and Admin Logout
+
+
+
+
+## Question 5. Fetch for Activities
+
+### (a) Members Activities Component
+
+
+### (b) Fetch Activities in the Component
 
