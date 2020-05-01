@@ -12,52 +12,59 @@
 * GET
 * sucess - 200
 * Not found - 404
+* All ppl
 
 
 2. /activities
 * POST
 * sucess - 200
-* Not found - 404
+* 400/401
+* Admin
 
 3. /activities/:index
 * DELETE
 * sucess - 200
-* No Content - 204
+* 400, 401
+* Admin
 
 4. /users
 * GET
 * sucess -200
-* unauthorized - 401
+* unauthorized - 400, 401
+* Admin
 
 
 ### (b) REST like interfaces?
-
+ Yes
 ### (c) Update Activity Interface
 
-/activities/:index
-* POST
+/activities/{id}
+* PUT
 * 200
-* 401
+* 400, 401
+* Admin
 
 ### (d) Add and Delete Club Member
 
-/login/modifyMember
+/users/modify
 * POST
 * 200
-* 401
+* 400, 401
+* Admin
 
 ### (e) Change Member Password
-/login/changePassword
-* POST
+/users/{userId}/changePassword
+* PUT
 * 200
-* 401
+* 400, 401
+* Member, Admin
 
 ## Question 2 Activities DataBase
 
 ### (a) Create Initial Activity Database
 
 ```javascript
-const DataStore = require('nedb');
+const DataStore = require('nedb-promises');
 db = new DataStore({filename: __dirname + '/actDB', autoload: true});
 
 const activities = require('./activities.json');
@@ -83,7 +90,7 @@ actdb.find({}, function(err, docs) {
         console.log("something is wrong");
     } else {
         //print out activities
-        console.log("We found " + docs.length + " documents");
+        console.log("We found " + docs.length + " activities");
         console.log(docs);
     }
 });
@@ -114,7 +121,7 @@ app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
 
 ### (b) Development Proxy
 1. Where should the development proxy (devProxy) code be located? E.g., with the React client code or with the server code?
- Neither. Create a new file in bewteen client and server 
+ in client code folder.
 
 2. What paths are you going to forward to the server?
     '/activities', '/login', '/logout', '/users'
@@ -123,13 +130,13 @@ app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
     http://127.8.88.5:8386
 
 4. On what IP address and port are you going to run your devProxy?
-    http://127.8.88.5:8386
+    localhost:1234
     
 5. At which URL will you point your browser?
     localhost:1234
     
 6. How many command terminals do you need and what will be running in each?
-    Just key in localhost:1234 within path
+    2, devproxy and clubserver
     
 7. What additional NPM packages do you need to install and where?
     * [http-proxy-middleware](https://www.npmjs.com/package/http-proxy-middleware)
@@ -147,8 +154,17 @@ app.delete('/activities/:index',checkAdminMiddleware, function (req, res){
 ### (a) Member and Admin Login 
 ```javascript
 loginInfo(){
-    fetch('/logInfo').then(function(response){
-        console.log(response);
+    fetch('/logInfo',{
+    method:"POST",
+    headers:{
+    "Content-type": "application/json"
+    },
+    body: JSON.stringify({
+        email: that.state.email,
+        password: that.state.password })
+}).then(function(response){
+    console.log("Request status code: ", response.statusText, response.status, response.type );
+        return response.json(); 
     });
     if(this.state.email === 'admin@email.org'){
         this.setRole('admin', ''); 
@@ -177,7 +193,6 @@ app.get('/logout', function (req, res) {
 });
 
 ```
-
 
 
 ## Question 5. Fetch for Activities
